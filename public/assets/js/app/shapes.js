@@ -1,5 +1,6 @@
 // shapes //
 // kynd.info 2014
+
 function Ball(r, p, v) {
 	this.radius = r;
 	this.point = p;
@@ -126,6 +127,8 @@ for (var i = 0; i < numBalls; i++) {
 }
 
 function onFrame() {
+
+	//paper.view.center = (view.size, view.size/2)
 	
 	for (var i = 0; i < balls.length - 1; i++) {
 		for (var j = i + 1; j < balls.length; j++) {
