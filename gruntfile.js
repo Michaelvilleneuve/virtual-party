@@ -8,8 +8,11 @@ module.exports = function(grunt) {
         separator: ';'
       },
       dist: {
-        src: ['assets/js/vendor/*.js'],
-        dest: 'assets/build/main.js'
+        src: [
+          'public/assets/js/vendor/*.js',
+          'node-modules/socket.io/lib/*.js',
+        ],
+        dest: 'public/assets/build/main.js'
       }
     },
     sass: {
@@ -17,25 +20,25 @@ module.exports = function(grunt) {
         options: {
           style: 'expanded'
         },
-        files: [{ // C'est ici que l'on définit le dossier que l'on souhaite importer
+        files: [{
           "expand": true,
-          "cwd": "assets/sass/",
+          "cwd": "public/assets/sass/",
           "src": ["*.sass"],
-          "dest": "assets/build/",
+          "dest": "public/assets/build/",
           "ext": ".css"
         }]
       }
     }, 
     watch: {
       scripts: {
-        files: ['assets/js/*.js', ],
+        files: ['public/assets/js/*.js', ],
         tasks: ['jshint'],
         options: {
           spawn: false,
         },
       },
       css: {
-        files: 'assets/sass/*.sass',
+        files: 'public/assets/sass/*.sass',
         tasks: ['sass']
       },
     },
