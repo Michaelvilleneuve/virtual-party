@@ -22,10 +22,32 @@ io.sockets.on('connection', function (socket) {
     console.log('New user connected !');
     console.log('ID :  '+socket.id);
 
-    var user = new User({ pseudo: 'Olive', socketId: socket.id,  pos_x: 44, pos_y: 66});
+    var user = new User({ pseudo: 'Olive', socketId: socket.id,  pos_x: 0, pos_y: 0});
     user.save(function (err, user) {
 	  	if (err) return console.error(err);	  	
 	});
+
+	var step = 10;
+
+    socket.on('move_left', function(){
+    	user.x += step;
+    	user.save();
+    });
+
+    socket.on('move_right', function(){
+    	user.x -= step;
+    	user.save();
+    });
+
+    socket.on('move_up', function(){
+    	user.y += step;
+    	user.save();
+    });
+
+    socket.on('move_down', function(){
+    	user.y += step;
+    	user.save();
+    });
 
     socket.on('disconnect', function() {
        user.remove();
@@ -33,5 +55,5 @@ io.sockets.on('connection', function (socket) {
 });
 
 server.listen(port, function(){
-	console.log("Server running on port: "+port)
+	console.log("Server running on port: "+port);
 });
