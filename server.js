@@ -15,18 +15,21 @@ app.get('/users', function(req, res) {
 	User.find(function (err, users) {
   		if (err) return console.error(err);
   		res.json(users);
-	})   	
+	});   	
 });
 
 io.sockets.on('connection', function (socket) {
-    console.log('New user connected !');
-    console.log('ID :  '+socket.id);
-
-    var user = new User({ pseudo: 'Olive', socketId: socket.id,  pos_x: 0, pos_y: 0});
+    var user = new User({ pseudo: '', socketId: socket.id,  pos_x: 0, pos_y: 0});
     user.save(function (err, user) {
 	  	if (err) return console.error(err);	  	
 	});
+	
+	socket.on('set_pseudo', function(pseudo){
+		user.pseudo = pseudo;
+		user.save();
+	});
 
+	// Step size
 	var step = 10;
 
     socket.on('move_left', function(){
