@@ -1,7 +1,23 @@
 {
   "name": "virtual-party",
-  "version": "0.1.0",
-  "devDependencies": {
+  "version": "1.0.0",
+  "description": " ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Michaelvilleneuve/virtual-party/issues"
+  },
+  "homepage": "https://github.com/Michaelvilleneuve/virtual-party#readme",
+  "dependencies": {
+    "express": "~4.13.4",
+    "socket.io": "~1.4.5",
+    "mongoose": "~4.4.11",
     "grunt": "~0.4.5",
     "grunt-contrib-jshint": "~0.10.0",
     "grunt-contrib-nodeunit": "~0.4.1",
