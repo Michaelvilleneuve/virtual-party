@@ -33,22 +33,22 @@ io.sockets.on('connection', function (socket) {
 	var step = 10;
 
     socket.on('move_left', function(){
-    	user.x += step;
+    	user.pos_x += step;
     	user.save();
     });
 
     socket.on('move_right', function(){
-    	user.x -= step;
+    	user.pos_x -= step;
     	user.save();
     });
 
     socket.on('move_up', function(){
-    	user.y += step;
+    	user.pos_y += step;
     	user.save();
     });
 
     socket.on('move_down', function(){
-    	user.y += step;
+    	user.pos_y += step;
     	user.save();
     });
 
