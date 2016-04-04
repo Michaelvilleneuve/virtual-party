@@ -71,7 +71,7 @@ Ball.prototype = {
 
 	react: function(b) {
 		var dist = this.point.getDistance(b.point);
-		if (dist < (this.radius + b.radius + 10) && dist != 0) {
+		if (dist < (this.radius + b.radius + 30) && dist != 0) {
 			var overlap = this.radius + b.radius - dist;
 			var direc = (this.point - b.point).normalize(overlap * 0.015);
 			this.vector += direc;
