@@ -1,21 +1,19 @@
-// ball
-
+// shapes //
 // kynd.info 2014
-
 function Ball(r, p, v) {
 	this.radius = r;
 	this.point = p;
 	this.vector = v;
-	this.maxVec = 15;
-	this.numSegment = Math.floor(r / 3 + 2);
+	this.maxVec = 0;
+	this.numSegment = 360;
 	this.boundOffset = [];
 	this.boundOffsetBuff = [];
 	this.sidePoints = [];
 	this.path = new Path({
-		fillColor: {
-			hue: Math.random() * 360,
+		strokeColor: {
+			hue: 205,
 			saturation: 1,
-			brightness: 1
+			brightness: 0.6
 		},
 		blendMode: 'lighter'
 	});
@@ -115,14 +113,14 @@ Ball.prototype = {
 //--------------------- main ---------------------
 
 var balls = [];
-var numBalls = 18;
+var numBalls = 1;
 for (var i = 0; i < numBalls; i++) {
-	var position = Point.random() * view.size;
+	var position = view.size/2;
 	var vector = new Point({
 		angle: 360 * Math.random(),
 		length: Math.random() * 10
 	});
-	var radius = Math.random() * 60 + 60;
+	var radius = 40;
 	balls.push(new Ball(radius, position, vector));
 }
 
@@ -134,5 +132,17 @@ function onFrame() {
 	}
 	for (var i = 0, l = balls.length; i < l; i++) {
 		balls[i].iterate();
+	}
+}
+
+function onKeyDown(event) {
+	if(event.key === "up"){
+		console.log("up pressed");
+	}
+}
+
+function onKeyUp(event) {
+	if(event.key === "up"){
+		console.log("up unpressed");
 	}
 }

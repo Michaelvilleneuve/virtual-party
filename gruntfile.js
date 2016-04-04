@@ -25,12 +25,25 @@ module.exports = function(grunt) {
           "ext": ".css"
         }]
       }
-    }
+    }, 
+    watch: {
+      scripts: {
+        files: ['assets/js/*.js', ],
+        tasks: ['jshint'],
+        options: {
+          spawn: false,
+        },
+      },
+      css: {
+        files: 'assets/sass/*.sass',
+        tasks: ['sass']
+      },
+    },
   });
 
-  // Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Default task(s).
   grunt.registerTask('default', ['concat', 'sass']);
