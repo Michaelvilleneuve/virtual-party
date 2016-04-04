@@ -9,6 +9,7 @@ module.exports = function(grunt) {
       },
       dist: {
         src: [
+          'public/assets/js/app/*.js',
           'public/assets/js/vendor/*.js',
           'node-modules/socket.io/lib/*.js',
         ],
