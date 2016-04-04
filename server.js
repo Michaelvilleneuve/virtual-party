@@ -5,7 +5,7 @@ var server          = require('http').Server(app);
 var io              = require('socket.io').listen(server);
 var mongoose 		= require('mongoose');
 
-mongoose.connect(process.env.MONGOLAB_URI);
+mongoose.connect(process.env.MONGOLAB_URI || "mongodb://localhost/");
 
 app.use(express.static(__dirname + '/public'));
 
