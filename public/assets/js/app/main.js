@@ -1,1 +1,1 @@
-var socket = io();
+var pseudo = prompt("coucou?");
