@@ -6,7 +6,7 @@ function Ball(r, p, v) {
 	this.point = p;
 	this.vector = v;
 	this.maxVec = 4;
-	this.numSegment = Math.floor(r / 3 + 3);
+	this.numSegment = 60;
 	this.boundOffset = [];
 	this.boundOffsetBuff = [];
 	this.sidePoints = [];
@@ -128,7 +128,7 @@ for (var i = 0; i < numBalls; i++) {
 
 function onFrame() {
 
-	//paper.view.center = (view.size, view.size/2)
+	//paper.view.center = (view.size, balls[0].vector.y)
 	
 	for (var i = 0; i < balls.length - 1; i++) {
 		for (var j = i + 1; j < balls.length; j++) {
@@ -159,9 +159,6 @@ function onKeyDown(event) {
 	if(event.key === "right"){
 		balls[0].vector.x += 10;
 	}
-
-	console.log(balls[0].vector.x);
-	console.log(balls[0].vector.y);
 }
 
 function onKeyUp(event) {
