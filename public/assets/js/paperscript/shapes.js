@@ -71,17 +71,17 @@ Ball.prototype = {
 
 	react: function(b) {
 		var dist = this.point.getDistance(b.point);
-		if (dist < (this.radius + b.radius + 30) && dist != 0) {
+		if (dist < (this.radius + b.radius + 15) && dist != 0) {
 			var overlap = this.radius + b.radius - dist;
 			var direc = (this.point - b.point).normalize(overlap * 0.015);
 			this.vector += direc;
-			b.vector -= direc;
+			b.vector -= direc/10;
 
 			var from = this.point;
 			var to = b.point;
 			var path = new Path.Line(from, to);
 			path.strokeColor = {
-				hue: 260,
+				hue: 360,
 				saturation: 1,
 				brightness: 0.6
 			};
@@ -125,7 +125,7 @@ Ball.prototype = {
 
 var balls = [];
 var lines = new Group();
-var numBalls = 100;
+var numBalls = 50;
 for (var i = 0; i < numBalls; i++) {
 	//var position = 0;
 	var position = Point.random() * view.size;
@@ -160,7 +160,7 @@ function onFrame() {
 	// decelerate and stop the ball if not moved
 	for (var i = 1; i < balls.length; i++) {
 		if(balls[i].maxVec > 0.1){
-			balls[i].maxVec -= 0.1;
+			balls[i].maxVec -= 0.2;
 		}
 	}
 }
