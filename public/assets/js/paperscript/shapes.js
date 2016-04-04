@@ -12,7 +12,7 @@ function Ball(r, p, v) {
 	this.sidePoints = [];
 	this.path = new Path({
 		fillColor: {
-			hue: 205,
+			hue: 0,
 			saturation: 1,
 			brightness: 0.6
 		},
@@ -114,21 +114,22 @@ Ball.prototype = {
 //--------------------- main ---------------------
 
 var balls = [];
-var numBalls = 2;
+var numBalls = 100;
 for (var i = 0; i < numBalls; i++) {
-	var position = 0;
-	//var position = Point.random() * view.size;
+	//var position = 0;
+	var position = Point.random() * view.size;
+	if(i===0){
+		position = new Point(view.size/2, view.size/2);
+	}
 	var vector = new Point({
 		angle: 360,
 		length: Math.random() * 10
 	});
-	var radius = 40;
+	var radius = 20;
 	balls.push(new Ball(radius, position, vector));
 }
 
 function onFrame() {
-
-	//paper.view.center = (view.size, balls[0].vector.y)
 	
 	for (var i = 0; i < balls.length - 1; i++) {
 		for (var j = i + 1; j < balls.length; j++) {
@@ -140,27 +141,39 @@ function onFrame() {
 	}
 
 	// decelerate and stop the ball if not moved
-	if(balls[0].maxVec > 0.1){
-		balls[0].maxVec -= 0.1;
+	for (var i = 1; i < balls.length - 1; i++) {
+		if(balls[i].maxVec > 0.1){
+			balls[i].maxVec -= 0.1;
+		}
 	}
 }
 
 function onKeyDown(event) {
-	balls[0].maxVec = 6;
+	for (var i = 1; i < balls.length - 1; i++) {
+		balls[i].maxVec = 6;
+	}
 	if(event.key === "up"){
-		balls[0].vector.y -= 10;
-		socket.emit('move_left');
+		for (var i = 1; i < balls.length - 1; i++) {
+			balls[i].vector.y += 10;
+		}
+		socket.emit('move_up');
 	}
 	if(event.key === "down"){
-		balls[0].vector.y += 10;
+		for (var i = 1; i < balls.length - 1; i++) {
+			balls[i].vector.y -= 10;
+		}
 		socket.emit('move_down');
 	}
 	if(event.key === "left"){
-		balls[0].vector.x -= 10;
+		for (var i = 1; i < balls.length - 1; i++) {
+			balls[i].vector.x += 10;
+		}
 		socket.emit('move_left');
 	}
 	if(event.key === "right"){
-		balls[0].vector.x += 10;
+		for (var i = 1; i < balls.length - 1; i++) {
+			balls[i].vector.x -= 10;
+		}
 		socket.emit('move_right');
 	}
 }
