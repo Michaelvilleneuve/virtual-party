@@ -149,7 +149,8 @@ function onKeyDown(event) {
 	balls[0].maxVec = 6;
 	if(event.key === "up"){
 		balls[0].vector.y -= 10;
-		socket.emit('move_left');
+		socket.emit('move_up');
+		console.log('cc');
 	}
 	if(event.key === "down"){
 		balls[0].vector.y += 10;

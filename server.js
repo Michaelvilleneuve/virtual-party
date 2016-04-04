@@ -32,27 +32,28 @@ io.sockets.on('connection', function (socket) {
 	// Step size
 	var step = 10;
 
-    socket.on('move_left', function(){
-    	user.pos_x += step;
-    	user.save();
-    });
-
-    socket.on('move_right', function(){
+    socket.on('move_left', function(x){
     	user.pos_x -= step;
     	user.save();
     });
 
-    socket.on('move_up', function(){
-    	user.pos_y += step;
+    socket.on('move_right', function(x){
+    	user.pos_x += step;
     	user.save();
     });
 
-    socket.on('move_down', function(){
+    socket.on('move_up', function(x){
     	user.pos_y += step;
+    	user.save();
+    	console.log('cc');
+    });
+
+    socket.on('move_down', function(x){
+    	user.pos_y -= step;
     	user.save();
     });
 
-    socket.on('disconnect', function() {
+    socket.on('disconnect', function(x) {
        user.remove();
     });
 });
