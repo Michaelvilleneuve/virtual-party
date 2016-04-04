@@ -10,6 +10,7 @@ module.exports = function(grunt) {
       dist: {
         src: [
           'public/assets/js/vendor/*.js',
+          'public/assets/js/app/*.js',
           'node-modules/socket.io/lib/*.js',
         ],
         dest: 'public/assets/build/main.js'
