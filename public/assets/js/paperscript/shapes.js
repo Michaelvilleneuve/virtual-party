@@ -12,7 +12,7 @@ function Ball(r, p, v) {
 	this.sidePoints = [];
 	this.path = new Path({
 		fillColor: {
-			hue: 0,
+			hue: 260,
 			saturation: 1,
 			brightness: 0.6
 		},
@@ -129,6 +129,10 @@ for (var i = 0; i < numBalls; i++) {
 	balls.push(new Ball(radius, position, vector));
 }
 
+balls[0].path.fillColor.hue = 320;
+balls[0].maxVec = 0;
+balls[0].p = new Point(view.size/2, view.size/2);
+
 function onFrame() {
 	
 	for (var i = 0; i < balls.length - 1; i++) {
@@ -141,7 +145,7 @@ function onFrame() {
 	}
 
 	// decelerate and stop the ball if not moved
-	for (var i = 1; i < balls.length - 1; i++) {
+	for (var i = 1; i < balls.length; i++) {
 		if(balls[i].maxVec > 0.1){
 			balls[i].maxVec -= 0.1;
 		}
