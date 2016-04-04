@@ -71,11 +71,21 @@ Ball.prototype = {
 
 	react: function(b) {
 		var dist = this.point.getDistance(b.point);
-		if (dist < this.radius + b.radius && dist != 0) {
+		if (dist < (this.radius + b.radius + 10) && dist != 0) {
 			var overlap = this.radius + b.radius - dist;
 			var direc = (this.point - b.point).normalize(overlap * 0.015);
 			this.vector += direc;
 			b.vector -= direc;
+
+			var from = this.point;
+			var to = b.point;
+			var path = new Path.Line(from, to);
+			path.strokeColor = {
+				hue: 260,
+				saturation: 1,
+				brightness: 0.6
+			};
+			lines.addChild(path);
 
 			this.calcBounds(b);
 			b.calcBounds(this);
@@ -114,6 +124,7 @@ Ball.prototype = {
 //--------------------- main ---------------------
 
 var balls = [];
+var lines = new Group();
 var numBalls = 100;
 for (var i = 0; i < numBalls; i++) {
 	//var position = 0;
@@ -134,8 +145,10 @@ balls[0].maxVec = 0;
 balls[0].p = new Point(view.size/2, view.size/2);
 
 function onFrame() {
+
+	lines.removeChildren();
 	
-	for (var i = 0; i < balls.length - 1; i++) {
+	for (var i = 0; i < balls.length; i++) {
 		for (var j = i + 1; j < balls.length; j++) {
 			balls[i].react(balls[j]);
 		}
@@ -153,29 +166,29 @@ function onFrame() {
 }
 
 function onKeyDown(event) {
-	for (var i = 1; i < balls.length - 1; i++) {
+	for (var i = 1; i < balls.length; i++) {
 		balls[i].maxVec = 6;
 	}
 	if(event.key === "up"){
-		for (var i = 1; i < balls.length - 1; i++) {
+		for (var i = 1; i < balls.length; i++) {
 			balls[i].vector.y += 10;
 		}
 		socket.emit('move_up');
 	}
 	if(event.key === "down"){
-		for (var i = 1; i < balls.length - 1; i++) {
+		for (var i = 1; i < balls.length; i++) {
 			balls[i].vector.y -= 10;
 		}
 		socket.emit('move_down');
 	}
 	if(event.key === "left"){
-		for (var i = 1; i < balls.length - 1; i++) {
+		for (var i = 1; i < balls.length; i++) {
 			balls[i].vector.x += 10;
 		}
 		socket.emit('move_left');
 	}
 	if(event.key === "right"){
-		for (var i = 1; i < balls.length - 1; i++) {
+		for (var i = 1; i < balls.length; i++) {
 			balls[i].vector.x -= 10;
 		}
 		socket.emit('move_right');
