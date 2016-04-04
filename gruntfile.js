@@ -11,7 +11,6 @@ module.exports = function(grunt) {
         src: [
           'public/assets/js/app/*.js',
           'public/assets/js/vendor/*.js',
-          'public/assets/js/app/*.js',
           'node-modules/socket.io/lib/*.js',
         ],
         dest: 'public/assets/build/main.js'
@@ -33,7 +32,7 @@ module.exports = function(grunt) {
     }, 
     watch: {
       scripts: {
-        files: ['public/assets/js/*.js', ],
+        files: ['public/assets/js/vendor/*.js', ],
         tasks: ['jshint'],
         options: {
           spawn: false,

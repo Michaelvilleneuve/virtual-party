@@ -116,8 +116,8 @@ Ball.prototype = {
 var balls = [];
 var numBalls = 2;
 for (var i = 0; i < numBalls; i++) {
-	//var position = view.size/2;
-	var position = Point.random() * view.size;
+	var position = 0;
+	//var position = Point.random() * view.size;
 	var vector = new Point({
 		angle: 360,
 		length: Math.random() * 10
