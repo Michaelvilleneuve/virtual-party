@@ -39,3 +39,12 @@ e(a)}n+="}"}else e(t);return Function("str",n)}function r(){this.line=Pt,this.co
 var pseudo = prompt("Pseudo?");
 socket.emit("set_pseudo", pseudo);
 
+socket.on('users', function(users){
+	console.log(users);
+});
+
+socket.on('update', function(user){
+	console.log(user);
+});
+
+

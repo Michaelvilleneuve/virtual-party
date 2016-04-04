@@ -24,33 +24,41 @@ io.sockets.on('connection', function (socket) {
 	  	if (err) return console.error(err);	  	
 	});
 	
+
+	var step = 10;
+
+	function update() {
+		user.save();
+		socket.broadcast.emit('update', {id: socket.id, pos_x:user.pos_x, pos_y:user.pos_y});
+	}
+	
 	socket.on('set_pseudo', function(pseudo){
 		user.pseudo = pseudo;
-		user.save();
+		User.find(function (err, users) {
+	  		if (err) return console.error(err);
+			socket.emit('users', users);
+		}); 
+		update();
 	});
-
-	// Step size
-	var step = 10;
 
     socket.on('move_left', function(x){
     	user.pos_x -= step;
-    	user.save();
+    	update();
     });
 
     socket.on('move_right', function(x){
     	user.pos_x += step;
-    	user.save();
+    	update();
     });
 
     socket.on('move_up', function(x){
     	user.pos_y += step;
-    	user.save();
-    	console.log('cc');
+    	update();
     });
 
     socket.on('move_down', function(x){
     	user.pos_y -= step;
-    	user.save();
+    	update();
     });
 
     socket.on('disconnect', function(x) {
