@@ -149,15 +149,19 @@ function onKeyDown(event) {
 	balls[0].maxVec = 6;
 	if(event.key === "up"){
 		balls[0].vector.y -= 10;
+		socket.emit('move_left');
 	}
 	if(event.key === "down"){
 		balls[0].vector.y += 10;
+		socket.emit('move_down');
 	}
 	if(event.key === "left"){
 		balls[0].vector.x -= 10;
+		socket.emit('move_left');
 	}
 	if(event.key === "right"){
 		balls[0].vector.x += 10;
+		socket.emit('move_right');
 	}
 }
 
