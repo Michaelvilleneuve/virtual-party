@@ -86,6 +86,13 @@ Ball.prototype = {
 				brightness: 0.6
 			};
 			lines.addChild(path);
+			var chat = document.createElement('div');		
+			document.body.appendChild(chat);
+			chat.style.left = (from.x - 20);
+			chat.style.top = (from.y - 20);
+			chat.style.width = 100;
+			chat.style.height = 200;
+			chat.style.backgroundColor = 'white';
 
 			this.calcBounds(b);
 			b.calcBounds(this);
@@ -125,7 +132,7 @@ Ball.prototype = {
 
 var balls = [];
 var lines = new Group();
-var numBalls = 50;
+var numBalls = 40;
 for (var i = 0; i < numBalls; i++) {
 	//var position = 0;
 	var position = Point.random() * view.size;
