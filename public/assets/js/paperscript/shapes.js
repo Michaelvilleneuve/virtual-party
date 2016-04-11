@@ -1,4 +1,5 @@
-function Ball(r, p, v) {
+function Ball(i, r, p, v) {
+	this.id = i;
 	this.radius = r;
 	this.point = p;
 	this.vector = v;
@@ -130,26 +131,26 @@ function onKeyDown(event) {
 	for (var i = 1; i < balls.length; i++) {
 		balls[i].maxVec = 6;
 	}
-	if(event.key === "up"){
+	if(event.key === "up" || event.key === "z"){
 		for (var i = 1; i < balls.length; i++) {
 			balls[i].vector.y += 10;
 			console.log(balls[i])
 		}
 		socket.emit('move_up');
 	}
-	if(event.key === "down"){
+	if(event.key === "down" || event.key === "s"){
 		for (var i = 1; i < balls.length; i++) {
 			balls[i].vector.y -= 10;
 		}
 		socket.emit('move_down');
 	}
-	if(event.key === "left"){
+	if(event.key === "left" || event.key === "q"){
 		for (var i = 1; i < balls.length; i++) {
 			balls[i].vector.x += 10;
 		}
 		socket.emit('move_left');
 	}
-	if(event.key === "right"){
+	if(event.key === "right" || event.key === "d"){
 		for (var i = 1; i < balls.length; i++) {
 			balls[i].vector.x -= 10;
 		}
@@ -160,29 +161,50 @@ function onKeyDown(event) {
 function onKeyUp(event) {
 }
 
-project.activeLayer.transform( new Matrix(1,0,0,-1,view.center.x, view.center.y) );
+paper.view.setCenter(0,0);
+
 balls = [];
 var lines = new Group();
 var numBalls = 50;
 
 socket.on('users', function(users){
 
-console.log(users);
-for (var i = 0; i < users.length; i++) {
-	var position = Point.random() * view.size;
-	if(i===0){
-		position = new Point(view.size/2, view.size/2);
+	console.log(users);
+	for (var i = 0; i < users.length; i++) {
+		if(i===0){
+			var position = new Point(0, 0);
+		} else {
+			var position = new Point(users[i].pos_x, users[i].pos_y);
+		}
+		var id = users[i].id;
+		var vector = new Point({
+			angle: 360,
+			length: Math.random() * 10
+		});
+		var radius = 20;
+		balls.push(new Ball(id, radius, position, vector));
 	}
-	var vector = new Point({
-		angle: 360,
-		length: Math.random() * 10
-	});
-	var radius = 20;
-	balls.push(new Ball(radius, position, vector));
-}
 
-balls[0].path.fillColor.hue = 320;
-balls[0].maxVec = 0;
-balls[0].p = new Point(view.size/2, view.size/2);
+	balls[0].path.fillColor.hue = 320;
+	balls[0].maxVec = 0;
+	balls[0].p = new Point(view.size/2, view.size/2);
 
+});
+
+socket.on('update', function(user){
+	var user = user;
+	console.log(user);
+	for (var i = 0; i < balls.length; i++) {
+		console.log("balls[i].id = "+balls[i].id);
+		if(balls[i].id === user.id){
+			console.log("la balle existe déjà");
+		} else {
+			var vector = new Point({
+				angle: 360,
+				length: Math.random() * 10
+			});
+			balls.push(new Ball(user.id, 20, new Point(user.pos_x, user.pos_y), vector));
+			console.log("balle créée");
+		}
+	}
 });
