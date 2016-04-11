@@ -207,7 +207,8 @@ socket.on('update', function(user){
 	var user = user;
 	console.log(user);
 	var ballAlreadyExists = false;
-	for (var i = 0; i < balls.length; i++) {
+	console.log(balls.length)
+	for (var i = 0; i < balls.length-1; i++) {
 		if(balls[i].socketId === user.socketId){
 			ballAlreadyExists = true;
 			var theBall = balls[i];
@@ -224,7 +225,7 @@ socket.on('update', function(user){
 			angle: 360,
 			length: Math.random() * 10
 		});
-		balls.push(new Ball(user.socketId, 20, new Point(user.pos_x, user.pos_y), vector));
+		//balls.push(new Ball(user.socketId, 20, new Point(user.pos_x, user.pos_y), vector));
 		console.log("balle créée");
 	}
 });

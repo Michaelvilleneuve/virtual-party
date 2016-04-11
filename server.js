@@ -22,6 +22,7 @@ io.sockets.on('connection', function (socket) {
     var user = new User({ pseudo: '', socketId: socket.id,  pos_x: 0, pos_y: 0});
     user.save(function (err, user) {
 	  	if (err) return console.error(err);
+        console.log('saved user '+user.pseudo);
         socket.emit('user', user);
 	});
 	
