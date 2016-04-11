@@ -20,7 +20,7 @@ app.get('/users', function(req, res) {
 
 io.sockets.on('connection', function (socket) {
     
-	
+	var user = {};
 	var step = 10;
 
 	function update() {
