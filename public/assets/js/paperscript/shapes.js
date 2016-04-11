@@ -168,11 +168,15 @@ paper.view.setCenter(0,0);
 balls = [];
 var lines = new Group();
 var numBalls = 50;
+
 socket.on('user', function(user){
 	currentUser = user;
+
 });
 
 function createBall(user){
+	while(typeof currentUser === "undefined"){
+	}
 	var position = new Point((currentUser.pos_x + user.pos_x) , (currentUser.pos_y - user.pos_y));
 	var id = user.socketId;
 	var vector = new Point({
