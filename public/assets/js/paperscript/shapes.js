@@ -133,8 +133,7 @@ function onKeyDown(event) {
 	if(event.key === "up"){
 		for (var i = 1; i < balls.length; i++) {
 			balls[i].vector.y += 10;
-			console.log(balls[i])
-		}
+			}
 		socket.emit('move_up');
 	}
 	if(event.key === "down"){
