@@ -8,4 +8,3 @@ function send() {
 	socket.emit("message", document.getElementById("message").value);
 	document.getElementById("message").value = "";
 }
-
