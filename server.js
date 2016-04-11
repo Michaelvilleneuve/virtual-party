@@ -21,10 +21,10 @@ app.get('/users', function(req, res) {
 io.sockets.on('connection', function (socket) {
     var user = new User({ pseudo: '', socketId: socket.id,  pos_x: 0, pos_y: 0});
     user.save(function (err, user) {
-	  	if (err) return console.error(err);	  	
+	  	if (err) return console.error(err);
+        socket.emit('user', user);
 	});
 	
-
 	var step = 10;
 
 	function update() {

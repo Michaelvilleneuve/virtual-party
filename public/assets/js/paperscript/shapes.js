@@ -1,5 +1,5 @@
 function Ball(i, r, p, v) {
-	this.id = i;
+	this.socketId = i;
 	this.radius = r;
 	this.point = p;
 	this.vector = v;
@@ -134,6 +134,7 @@ function onKeyDown(event) {
 	if(event.key === "up" || event.key === "z"){
 		for (var i = 1; i < balls.length; i++) {
 			balls[i].vector.y += 10;
+			currentUser.pos_y -= 10;
 			console.log(balls[i])
 		}
 		socket.emit('move_up');
@@ -141,18 +142,21 @@ function onKeyDown(event) {
 	if(event.key === "down" || event.key === "s"){
 		for (var i = 1; i < balls.length; i++) {
 			balls[i].vector.y -= 10;
+			currentUser.pos_y += 10;
 		}
 		socket.emit('move_down');
 	}
 	if(event.key === "left" || event.key === "q"){
 		for (var i = 1; i < balls.length; i++) {
 			balls[i].vector.x += 10;
+			currentUser.pos_x -= 10;
 		}
 		socket.emit('move_left');
 	}
 	if(event.key === "right" || event.key === "d"){
 		for (var i = 1; i < balls.length; i++) {
 			balls[i].vector.x -= 10;
+			currentUser.pos_x += 10;
 		}
 		socket.emit('move_right');
 	}
@@ -166,23 +170,31 @@ paper.view.setCenter(0,0);
 balls = [];
 var lines = new Group();
 var numBalls = 50;
+socket.on('user', function(user){
+	currentUser = user;
+});
+
+function createBall(user){
+	var position = new Point(user.pos_x, user.pos_y);
+	var id = user.socketId;
+	var vector = new Point({
+		angle: 360,
+		length: Math.random() * 10
+	});
+	var radius = 20;
+	balls.push(new Ball(id, radius, position, vector));
+}
 
 socket.on('users', function(users){
 
 	console.log(users);
+
+	createBall(currentUser);
+
 	for (var i = 0; i < users.length; i++) {
-		if(i===0){
-			var position = new Point(0, 0);
-		} else {
-			var position = new Point(users[i].pos_x, users[i].pos_y);
+		if( users[i].socketId !== currentUser.socketId){
+			createBall(users[i]);
 		}
-		var id = users[i].id;
-		var vector = new Point({
-			angle: 360,
-			length: Math.random() * 10
-		});
-		var radius = 20;
-		balls.push(new Ball(id, radius, position, vector));
 	}
 
 	balls[0].path.fillColor.hue = 320;
@@ -194,17 +206,25 @@ socket.on('users', function(users){
 socket.on('update', function(user){
 	var user = user;
 	console.log(user);
+	var ballAlreadyExists = false;
 	for (var i = 0; i < balls.length; i++) {
-		console.log("balls[i].id = "+balls[i].id);
-		if(balls[i].id === user.id){
-			console.log("la balle existe déjà");
-		} else {
-			var vector = new Point({
-				angle: 360,
-				length: Math.random() * 10
-			});
-			balls.push(new Ball(user.id, 20, new Point(user.pos_x, user.pos_y), vector));
-			console.log("balle créée");
-		}
+		if(balls[i].socketId === user.socketId){
+			ballAlreadyExists = true;
+			var theBall = balls[i];
+			break;
+		} 
+	}
+	if(ballAlreadyExists){
+		console.log("balle déjà créée "+theBall.socketId);
+		console.log(theBall);
+		theBall.point.x = (currentUser.pos_x - user.pos_x)*6;
+		theBall.point.y = (currentUser.pos_y - user.pos_y)*6;
+	} else {
+		var vector = new Point({
+			angle: 360,
+			length: Math.random() * 10
+		});
+		balls.push(new Ball(user.socketId, 20, new Point(user.pos_x, user.pos_y), vector));
+		console.log("balle créée");
 	}
 });
