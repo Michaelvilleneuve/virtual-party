@@ -207,7 +207,7 @@ socket.on('update', function(user){
 	var ballAlreadyExists = false;
 	for (var i = 0; i < balls.length; i++) {
 		if(balls[i].socketId === user.socketId){
-			balls[i].point.x = (currentUser.pos_x - user.pos_x)*6;
+			balls[i].point.x = (currentUser.pos_x + user.pos_x)*6;
 			balls[i].point.y = (currentUser.pos_y - user.pos_y)*6;
 			ballAlreadyExists = true;
 			break;
