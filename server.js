@@ -30,7 +30,7 @@ io.sockets.on('connection', function (socket) {
 
 	function update() {
 		user.save();
-		socket.broadcast.emit('update', {id: socket.id, pos_x:user.pos_x, pos_y:user.pos_y});
+		socket.broadcast.emit('update', {socketId: socket.id, pos_x:user.pos_x, pos_y:user.pos_y});
 	}
 	function sendMessage(message, users) {
         for (var i = 0; i < users.length; i++) {
@@ -81,6 +81,7 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('disconnect', function(x) {
        user.remove();
+       socket.broadcast.emit('remove',user);    
     });
 });
 
