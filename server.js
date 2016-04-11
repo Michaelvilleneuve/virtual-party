@@ -19,18 +19,13 @@ app.get('/users', function(req, res) {
 });
 
 io.sockets.on('connection', function (socket) {
-    var user = new User({ pseudo: '', socketId: socket.id,  pos_x: 0, pos_y: 0});
-    user.save(function (err, user) {
-	  	if (err) return console.error(err);
-        console.log('saved user '+user.pseudo);
-        socket.emit('user', user);
-	});
+    
 	
 	var step = 10;
 
 	function update() {
 		user.save();
-		socket.broadcast.emit('update', {socketId: socket.id, pos_x:user.pos_x, pos_y:user.pos_y});
+		socket.broadcast.emit('update', {socketId: socket.id, pos_x:user.pos_x, pos_y:user.pos_y, pseudo: user.pseudo});
 	}
 	function sendMessage(message, users) {
         for (var i = 0; i < users.length; i++) {
@@ -40,7 +35,12 @@ io.sockets.on('connection', function (socket) {
     }
 
 	socket.on('set_pseudo', function(pseudo){
-		user.pseudo = pseudo;
+        user = new User({ pseudo: pseudo, socketId: socket.id,  pos_x: 0, pos_y: 0});
+        user.save(function (err, user) {
+            if (err) return console.error(err);
+            console.log('saved user '+user.pseudo);
+            socket.emit('user', user);
+        });
 		User.find(function (err, users) {
 	  		if (err) return console.error(err);
 			socket.emit('users', users);
@@ -80,8 +80,10 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('disconnect', function(x) {
-       user.remove();
-       socket.broadcast.emit('remove',user);    
+        if(typeof user !== "undefined"){
+            user.remove();
+            socket.broadcast.emit('remove',user);
+        }
     });
 });
 

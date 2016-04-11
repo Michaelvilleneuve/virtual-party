@@ -135,7 +135,6 @@ function onKeyDown(event) {
 		for (var i = 1; i < balls.length; i++) {
 			balls[i].vector.y += 10;
 			currentUser.pos_y -= 10;
-			console.log(balls[i])
 		}
 		socket.emit('move_up');
 	}
@@ -182,7 +181,16 @@ function createBall(user){
 		length: Math.random() * 10
 	});
 	var radius = 20;
-	balls.push(new Ball(id, radius, position, vector));
+	var pseudoDefined = true;
+	if(user.pseudo === "" || user.pseudo == undefined){
+		pseudoDefined = false;
+	}
+	if(pseudoDefined || balls.length === 0){
+		balls.push(new Ball(id, radius, position, vector));
+	}
+	console.log("pseudoDefined = "+pseudoDefined);
+	console.log("pseudo = "+user.pseudo);
+	console.log(balls);
 }
 
 socket.on('users', function(users){
@@ -206,9 +214,9 @@ socket.on('update', function(user){
 	console.log(user);
 	var ballAlreadyExists = false;
 	console.log(balls.length)
-	for (var i = 0; i < balls.length-1; i++) {
+	for (var i = 0; i < balls.length; i++) {
 		if(balls[i].socketId === user.socketId){
-			balls[i].point.x = (currentUser.pos_x - user.pos_x)*6;
+			balls[i].point.x = (currentUser.pos_x + user.pos_x)*6;
 			balls[i].point.y = (currentUser.pos_y - user.pos_y)*6;
 			ballAlreadyExists = true;
 			break;
@@ -219,11 +227,7 @@ socket.on('update', function(user){
 		}
 	}
 	if(!ballAlreadyExists){
-		var vector = new Point({
-			angle: 360,
-			length: Math.random() * 10
-		});
-		//balls.push(new Ball(user.socketId, 20, new Point(user.pos_x, user.pos_y), vector));
+		createBall(user);
 		console.log("balle créée");
 	}
 });
