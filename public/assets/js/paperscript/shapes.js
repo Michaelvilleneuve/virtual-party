@@ -208,28 +208,27 @@ socket.on('users', function(users){
 
 });
 
-socket.on('update', function(user){
-	var user = user;
-	console.log(user);
+socket.on('update', function(userToUpdate){
+	console.log(userToUpdate);
 	var ballAlreadyExists = false;
 	console.log(balls.length)
 	// pour chaque boule
 	for (var i = 0; i < balls.length; i++) {
 		// on sélectionne la boule qui doit bouger
-		if(balls[i].socketId === user.socketId){
+		if(balls[i].socketId === userToUpdate.socketId){
 			// seléctionnée
-			balls[i].point.x = user.pos_x - currentUser.pos_x;
-			balls[i].point.y = user.pos_y - currentUser.pos_y;
+			balls[i].point.x = userToUpdate.pos_x - currentUser.pos_x;
+			balls[i].point.y = userToUpdate.pos_y - currentUser.pos_y;
 			ballAlreadyExists = true;
 			break;
 			console.log("break");
 		} else {
 			console.log(balls[i].socketId);
-			console.log(user.socketId);
+			console.log(userToUpdate.socketId);
 		}
 	}
 	if(!ballAlreadyExists){
-		createBall(user);
+		createBall(userToUpdate);
 		console.log("balle créée");
 	}
 });
