@@ -187,11 +187,9 @@ function createBall(user){
 
 socket.on('users', function(users){
 
-	console.log(users);
-
 	createBall(currentUser);
 
-	for (var i = 0; i < users.length; i++) {
+	for (var i = 0; i < (users.length - 1); i++) {
 		if( users[i].socketId !== currentUser.socketId){
 			createBall(users[i]);
 		}
@@ -209,17 +207,17 @@ socket.on('update', function(user){
 	var ballAlreadyExists = false;
 	for (var i = 0; i < balls.length; i++) {
 		if(balls[i].socketId === user.socketId){
+			balls[i].point.x = (currentUser.pos_x - user.pos_x)*6;
+			balls[i].point.y = (currentUser.pos_y - user.pos_y)*6;
 			ballAlreadyExists = true;
-			var theBall = balls[i];
 			break;
-		} 
+			console.log("break");
+		} else {
+			console.log(balls[i].socketId);
+			console.log(user.socketId);
+		}
 	}
-	if(ballAlreadyExists){
-		console.log("balle déjà créée "+theBall.socketId);
-		console.log(theBall);
-		theBall.point.x = (currentUser.pos_x - user.pos_x)*6;
-		theBall.point.y = (currentUser.pos_y - user.pos_y)*6;
-	} else {
+	if(!ballAlreadyExists){
 		var vector = new Point({
 			angle: 360,
 			length: Math.random() * 10
