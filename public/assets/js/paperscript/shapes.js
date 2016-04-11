@@ -1,6 +1,3 @@
-// shapes //
-// kynd.info 2014
-
 function Ball(r, p, v) {
 	this.radius = r;
 	this.point = p;
@@ -29,7 +26,6 @@ function Ball(r, p, v) {
 		}));
 	}
 }
-
 Ball.prototype = {
 	iterate: function() {
 		this.checkBorders();
@@ -121,29 +117,6 @@ Ball.prototype = {
 	}
 };
 
-//--------------------- main ---------------------
-
-var balls = [];
-var lines = new Group();
-var numBalls = 50;
-for (var i = 0; i < numBalls; i++) {
-	//var position = 0;
-	var position = Point.random() * view.size;
-	if(i===0){
-		position = new Point(view.size/2, view.size/2);
-	}
-	var vector = new Point({
-		angle: 360,
-		length: Math.random() * 10
-	});
-	var radius = 20;
-	balls.push(new Ball(radius, position, vector));
-}
-
-balls[0].path.fillColor.hue = 320;
-balls[0].maxVec = 0;
-balls[0].p = new Point(view.size/2, view.size/2);
-
 function onFrame() {
 
 	lines.removeChildren();
@@ -197,3 +170,29 @@ function onKeyDown(event) {
 
 function onKeyUp(event) {
 }
+
+var balls = [];
+var lines = new Group();
+var numBalls = 50;
+
+socket.on('users', function(users){
+
+console.log(users);
+for (var i = 0; i < users.length; i++) {
+	var position = Point.random() * view.size;
+	if(i===0){
+		position = new Point(view.size/2, view.size/2);
+	}
+	var vector = new Point({
+		angle: 360,
+		length: Math.random() * 10
+	});
+	var radius = 20;
+	balls.push(new Ball(radius, position, vector));
+}
+
+balls[0].path.fillColor.hue = 320;
+balls[0].maxVec = 0;
+balls[0].p = new Point(view.size/2, view.size/2);
+
+});
