@@ -28,23 +28,10 @@ function Ball(r, p, v) {
 }
 Ball.prototype = {
 	iterate: function() {
-		this.checkBorders();
 		if (this.vector.length > this.maxVec)
 			this.vector.length = this.maxVec;
 		this.point += this.vector;
 		this.updateShape();
-	},
-
-	checkBorders: function() {
-		var size = view.size;
-		if (this.point.x < -this.radius)
-			this.point.x = size.width + this.radius;
-		if (this.point.x > size.width + this.radius)
-			this.point.x = -this.radius;
-		if (this.point.y < -this.radius)
-			this.point.y = size.height + this.radius;
-		if (this.point.y > size.height + this.radius)
-			this.point.y = -this.radius;
 	},
 
 	updateShape: function() {
@@ -112,8 +99,9 @@ Ball.prototype = {
 	},
 
 	updateBounds: function() {
-		for (var i = 0; i < this.numSegment; i ++)
+		for (var i = 0; i < this.numSegment; i ++){
 			this.boundOffset[i] = this.boundOffsetBuff[i];
+		}
 	}
 };
 
@@ -145,6 +133,7 @@ function onKeyDown(event) {
 	if(event.key === "up"){
 		for (var i = 1; i < balls.length; i++) {
 			balls[i].vector.y += 10;
+			console.log(balls[i])
 		}
 		socket.emit('move_up');
 	}
@@ -171,7 +160,8 @@ function onKeyDown(event) {
 function onKeyUp(event) {
 }
 
-var balls = [];
+project.activeLayer.transform( new Matrix(1,0,0,-1,view.center.x, view.center.y) );
+balls = [];
 var lines = new Group();
 var numBalls = 50;
 
