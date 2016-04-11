@@ -132,30 +132,29 @@ function onKeyDown(event) {
 	if(event.key === "up" || event.key === "z"){
 		for (var i = 1; i < balls.length; i++) {
 			balls[i].point.y += 10;
-			currentUser.pos_y -= 10;
 		}
-
+		currentUser.pos_y -= 10;
 		socket.emit('move_up');
 	}
 	if(event.key === "down" || event.key === "s"){
 		for (var i = 1; i < balls.length; i++) {
 			balls[i].point.y -= 10;
-			currentUser.pos_y += 10;
 		}
+		currentUser.pos_y += 10;
 		socket.emit('move_down');
 	}
 	if(event.key === "left" || event.key === "q"){
 		for (var i = 1; i < balls.length; i++) {
 			balls[i].point.x += 10;
-			currentUser.pos_x -= 10;
 		}
+		currentUser.pos_x -= 10;
 		socket.emit('move_left');
 	}
 	if(event.key === "right" || event.key === "d"){
 		for (var i = 1; i < balls.length; i++) {
 			balls[i].point.x -= 10;
-			currentUser.pos_x += 10;
 		}
+		currentUser.pos_x += 10;
 		socket.emit('move_right');
 	}
 }
@@ -175,9 +174,7 @@ socket.on('user', function(user){
 });
 
 function createBall(user){
-	while(typeof currentUser === "undefined"){
-	}
-	var position = new Point((currentUser.pos_x + user.pos_x) , (currentUser.pos_y - user.pos_y));
+	var position = new Point((user.pos_x - currentUser.pos_x) , (user.pos_y - currentUser.pos_y));
 	var id = user.socketId;
 	var vector = new Point({
 		angle: 360,
@@ -216,10 +213,13 @@ socket.on('update', function(user){
 	console.log(user);
 	var ballAlreadyExists = false;
 	console.log(balls.length)
+	// pour chaque boule
 	for (var i = 0; i < balls.length; i++) {
+		// on sélectionne la boule qui doit bouger
 		if(balls[i].socketId === user.socketId){
-			balls[i].point.x = (currentUser.pos_x + user.pos_x);
-			balls[i].point.y = (currentUser.pos_y - user.pos_y);
+			// seléctionnée
+			balls[i].point.x = user.pos_x - currentUser.pos_x;
+			balls[i].point.y = user.pos_y - currentUser.pos_y;
 			ballAlreadyExists = true;
 			break;
 			console.log("break");

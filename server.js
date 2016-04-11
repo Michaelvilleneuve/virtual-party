@@ -59,12 +59,12 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('move_up', function(x){
-    	user.pos_y += step;
+    	user.pos_y -= step;
     	update();
     });
 
     socket.on('move_down', function(x){
-    	user.pos_y -= step;
+    	user.pos_y += step;
     	update();
     });
 
