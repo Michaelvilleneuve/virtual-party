@@ -31,4 +31,21 @@ canvas {
   line-height: 0;
 }
 
+form {
+  position: fixed;
+  right: 0;
+  bottom: 10px;
+  z-index: 99;
+}
+
+#messages {
+  position: fixed;
+  right: 0;
+  height: 100%;
+  width: 300px;
+  background: #fff;
+  color: #000;
+  top: 0;
+}
+
 /*# sourceMappingURL=main.css.map */
