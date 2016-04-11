@@ -10,6 +10,12 @@
 	<script type="text/paperscript" canvas="myCanvas" src="assets/js/paperscript/shapes.js"></script>
 </head>
 <body>
+	<form onsubmit="send();return false;">
+		<textarea id="message"></textarea>
+		<input type="submit" id="submit" value="Envoyer">
+	</form>
 	<canvas id="myCanvas" resize></canvas>
+	<div id="messages">
+	</div>
 </body>
 </html>

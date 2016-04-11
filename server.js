@@ -31,7 +31,13 @@ io.sockets.on('connection', function (socket) {
 		user.save();
 		socket.broadcast.emit('update', {id: socket.id, pos_x:user.pos_x, pos_y:user.pos_y});
 	}
-	
+	function sendMessage(message, users) {
+        for (var i = 0; i < users.length; i++) {
+            socket.to(users[i].socketId).emit('message', { message:message, user: user });
+        }
+        socket.emit('message', { message:message, user: user });
+    }
+
 	socket.on('set_pseudo', function(pseudo){
 		user.pseudo = pseudo;
 		User.find(function (err, users) {
@@ -59,6 +65,17 @@ io.sockets.on('connection', function (socket) {
     socket.on('move_down', function(x){
     	user.pos_y -= step;
     	update();
+    });
+
+    socket.on('message', function(message) {
+       User.find().
+            where('pos_x').gt(user.pos_x - 30).lt(user.pos_x + 30).
+            where('pos_y').gt(user.pos_y - 30).lt(user.pos_y + 30).
+            exec(
+            function (err, users) {
+                if (err) return console.error(err);
+                sendMessage(message, users);
+            }); 
     });
 
     socket.on('disconnect', function(x) {
