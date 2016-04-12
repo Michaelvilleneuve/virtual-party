@@ -1,4 +1,24 @@
-console.log(view.size);
+var grid = new Group();
+
+var largeur = view.size._width;
+var hauteur = view.size._height;
+var nblignes = hauteur/15;
+var nbcolonnes = hauteur/15;
+
+for (var i = 0; i < nblignes; i++) {
+	var from = new Point(-largeur/2,i*nblignes - hauteur/2);
+	var to = new Point(largeur,i*nblignes - hauteur/2);
+	var path = new Path.Line(from, to);
+	path.strokeColor = "#E6E6E6";
+	grid.addChild(path);
+}
+for (var i = 0; i < nbcolonnes; i++) {
+	var from = new Point(i*nbcolonnes - largeur/2 ,-hauteur/2);
+	var to = new Point(i*nbcolonnes - largeur/2,hauteur);
+	var path = new Path.Line(from, to);
+	path.strokeColor = "#E6E6E6";
+	grid.addChild(path);
+}
 
 function Ball(i, r, p, v, pseudo) {
 	this.socketId = i;
@@ -176,6 +196,8 @@ function up() {
 		balls[i].point.y += 10;
 		balls[i].text.point.y += 10;
 	}
+	grid.position.y += 10;
+
 	currentUser.pos_y -= 10;
 	socket.emit('move_up');
 }
@@ -184,6 +206,7 @@ function down() {
 		balls[i].point.y -= 10;
 		balls[i].text.point.y -= 10;
 	}
+	grid.position.y -= 10;
 	currentUser.pos_y += 10;
 	socket.emit('move_down');
 }
@@ -192,6 +215,7 @@ function left() {
 		balls[i].point.x += 10;
 		balls[i].text.point.x += 10;
 	}
+	grid.position.x += 10;
 	currentUser.pos_x -= 10;
 	socket.emit('move_left');
 }
@@ -200,6 +224,7 @@ function right() {
 		balls[i].point.x -= 10;
 		balls[i].text.point.x -= 10;
 	}
+	grid.position.x -= 10;
 	currentUser.pos_x += 10;
 	socket.emit('move_right');
 }
@@ -322,6 +347,7 @@ socket.on('remove', function(user){
 		if(balls[i].socketId === user.socketId){
 			try {
 				balls[i].path.remove();	
+				balls[i].text.remove();	
 				balls.splice(i, 1);
 			} catch(err) {
 				console.log(err);
