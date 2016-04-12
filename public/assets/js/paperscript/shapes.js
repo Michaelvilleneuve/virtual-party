@@ -1,20 +1,20 @@
 var grid = new Group();
 
-var largeur = view.size._width;
-var hauteur = view.size._height;
-var nblignes = hauteur/15;
-var nbcolonnes = hauteur/15;
+var largeur = 20000;
+var hauteur = 20000;
+var nblignes = 400;
+var nbcolonnes = 400;
 
 for (var i = 0; i < nblignes; i++) {
-	var from = new Point(-largeur/2,i*nblignes - hauteur/2);
-	var to = new Point(largeur,i*nblignes - hauteur/2);
+	var from = new Point(-largeur/2,i*nblignes/10-10000);
+	var to = new Point(largeur,i*nblignes/10-10000);
 	var path = new Path.Line(from, to);
 	path.strokeColor = "#E6E6E6";
 	grid.addChild(path);
 }
 for (var i = 0; i < nbcolonnes; i++) {
-	var from = new Point(i*nbcolonnes - largeur/2 ,-hauteur/2);
-	var to = new Point(i*nbcolonnes - largeur/2,hauteur);
+	var from = new Point(i*nbcolonnes/10-10000,-hauteur/2);
+	var to = new Point(i*nbcolonnes/10-10000,hauteur);
 	var path = new Path.Line(from, to);
 	path.strokeColor = "#E6E6E6";
 	grid.addChild(path);
