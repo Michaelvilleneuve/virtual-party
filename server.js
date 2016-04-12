@@ -81,7 +81,12 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('disconnect', function(x) {
         if(typeof user !== "undefined"){
-            user.remove();
+            try{
+                user.remove();
+            }
+            catch(err) {
+                console.log(err);
+            }
             socket.broadcast.emit('remove',user);
         }
     });
