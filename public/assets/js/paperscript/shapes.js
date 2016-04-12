@@ -135,35 +135,75 @@ function onFrame() {
 	}
 }
 
+window.ondevicemotion = function(event) {
+  abscisses = event.accelerationIncludingGravity.x
+  ordonnees = event.accelerationIncludingGravity.y
+
+  if(typeof currentUser !== "undefined") {
+	  // left
+	  if (abscisses > 3) {
+	  	left();
+	  }
+
+	  // right
+	  if (abscisses < -3) {
+	  	right();
+	  }
+
+	  // down
+	  if (ordonnees > 6) {
+	  	down();
+	  }
+
+	  // up
+	  if (ordonnees < 0) {
+	  	up();
+	  }
+  }
+}
+
+function up() {
+	for (var i = 0; i < balls.length; i++) {
+		balls[i].point.y += 10;
+	}
+	currentUser.pos_y -= 10;
+	socket.emit('move_up');
+}
+function down() {
+	for (var i = 0; i < balls.length; i++) {
+		balls[i].point.y -= 10;
+	}
+	currentUser.pos_y += 10;
+	socket.emit('move_down');
+}
+function left() {
+	for (var i = 0; i < balls.length; i++) {
+		balls[i].point.x += 10;
+	}
+	currentUser.pos_x -= 10;
+	socket.emit('move_left');
+}
+function right() {
+	for (var i = 0; i < balls.length; i++) {
+		balls[i].point.x -= 10;
+	}
+	currentUser.pos_x += 10;
+	socket.emit('move_right');
+}
+
 function onKeyDown(event) {
 
 	if(event.key === "up" || event.key === "z"){
-		for (var i = 0; i < balls.length; i++) {
-			balls[i].point.y += 10;
-		}
-		currentUser.pos_y -= 10;
-		socket.emit('move_up');
+		up();
 	}
 	if(event.key === "down" || event.key === "s"){
-		for (var i = 0; i < balls.length; i++) {
-			balls[i].point.y -= 10;
-		}
-		currentUser.pos_y += 10;
-		socket.emit('move_down');
+		down();
 	}
 	if(event.key === "left" || event.key === "q"){
-		for (var i = 0; i < balls.length; i++) {
-			balls[i].point.x += 10;
-		}
-		currentUser.pos_x -= 10;
-		socket.emit('move_left');
+		left();
 	}
 	if(event.key === "right" || event.key === "d"){
-		for (var i = 0; i < balls.length; i++) {
-			balls[i].point.x -= 10;
-		}
-		currentUser.pos_x += 10;
-		socket.emit('move_right');
+		right();
 	}
 }
 
@@ -260,7 +300,6 @@ socket.on('update', function(u){
 
 /** Suppression **/
 socket.on('remove', function(user){
-	refresh();
 
 	for (var i = 0; i < balls.length; i++) {
 		if(balls[i].socketId === user.socketId){
@@ -272,5 +311,7 @@ socket.on('remove', function(user){
 			}
 		}
 	}
+	refresh();
 
 });
+
