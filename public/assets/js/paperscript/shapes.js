@@ -116,10 +116,11 @@ function onFrame() {
 		}
 	}
 
-	for (var j = 0; j < balls.length; j++) {
-		yourball.react(balls[j]);
-	}
-	if(typeof(yourball) !== "undefined") {
+	if(typeof yourball !== "undefined") {
+
+		for (var j = 0; j < balls.length; j++) {
+			yourball.react(balls[j]);
+		}
 		yourball.iterate();
 	}
 
