@@ -10,14 +10,20 @@
 	<script type="text/paperscript" canvas="myCanvas" src="assets/js/paperscript/shapes.js"></script>
 </head>
 <body>
-	<form onsubmit="send();return false;">
-		<textarea id="message"></textarea>
-		<input type="submit" id="submit" value="Envoyer">
-	</form>
+	<header>
+		<div class="infos" id="infos"></div>
+		<div class="infos left">
+			Hello <span id="pseudo"></span>
+		</div>
+		<h1>Virtual<span>Party</span></h1>
+	</header>
+	<div class="sidebar">
+		<div id="messages"></div>
+		<form onsubmit="send();return false;">
+			<textarea id="message"></textarea>
+			<input type="submit" id="submit" value="→">
+		</form>
+	</div>
 	<canvas id="myCanvas" resize></canvas>
-	<div id="messages">
-	</div>
-	<div id="infos">
-	</div>
 </body>
 </html>

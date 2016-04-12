@@ -179,6 +179,7 @@ var numBalls = 50;
 socket.on('user', function(user){
 	currentUser = user;
 	createYourBall(currentUser);
+	document.getElementById('pseudo').innerHTML = currentUser.pseudo;
 });
 
 function createYourBall(user){
@@ -188,6 +189,11 @@ function createYourBall(user){
 
 	yourball.path.fillColor.hue = 320;
 	yourball.p = new Point(view.size/2, view.size/2);
+
+	var pointTextLocation = new Point(view.size/2, view.size/2);
+	var myText = new paper.PointText(pointTextLocation);
+	myText.fillColor = 'black';
+	myText.content = user.pseudo;
 }
 
 function createBall(user){
@@ -260,8 +266,6 @@ socket.on('update', function(u){
 
 /** Suppression **/
 socket.on('remove', function(user){
-	refresh();
-
 	for (var i = 0; i < balls.length; i++) {
 		if(balls[i].socketId === user.socketId){
 			try {
@@ -272,5 +276,5 @@ socket.on('remove', function(user){
 			}
 		}
 	}
-
+	refresh();
 });

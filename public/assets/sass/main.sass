@@ -31,22 +31,102 @@ canvas
 	height: 100%
 	line-height: 0
 
+.sidebar
+	position: absolute
+	width: 400px
+	height: 500px
+	left: 20px
+	bottom: 20px
+	background-color: #fff
+
 form 
-	position: fixed
-	right: 0
-	bottom: 10px
+	position: absolute
+	left: 0
+	bottom: 0px
 	z-index: 99
+	width: 100%
+	padding: 0
+	margin: 0
+	border-top: 1px solid #09438B
+	textarea
+		display: block
+		position: relative
+		margin: 0
+		width: 100%
+		min-height: 50px
+		border: none
+		padding: 10px
+		background: transparent
+		+box-sizing(border-box)
+		&:active, &:focus
+			outline: none
+	input
+		position: absolute
+		right: 10px
+		bottom: 0px
+		appearance: none
+		-moz-appearance: none
+		-webkit-appearance: none
+		background: transparent
+		border: none
+		font-size: 21px
+		line-height: 50px
+		padding: 0
+		margin: 0
+		&:active, &:focus
+			outline: none
 
 #messages
-	position: fixed
-	right: 0
+	position: absolute
+	left: 0
 	height: 100%
-	width: 300px
+	width: 100%
 	background: #fff
+	border: 1px solid #09438B
 	color: #000
 	top: 0
+	padding: 10px
+	+box-sizing(border-box)
+	span
+		color: #09438B
+		font-family: $secondary-font
+		padding-right: 10px
 
-#infos
+header
+	background-color: #09438B
+	height: 55px 
+	color: #fff
+	padding: 0
+	text-align: center
 	position: fixed
-	top: 5px
-	left: 5px
+	top: 0
+	left: 0
+	width: 100%
+	h1
+		text-align: center
+		background-color: #1C5A96
+		padding: 0 30px
+		height: 100%
+		display: inline-block 
+		margin: 0 auto
+		color: #fff
+		letter-spacing: 0.1px
+		font-weight: normal
+		font-size: 20px
+		line-height: 55px 
+		span 
+			font-weight: bolder
+	.infos
+		position: absolute
+		//font-family: $secondary-font
+		font-size: 16px
+		top: 0px
+		line-height: 55px 
+		right: 20px
+		text-align: right
+		&.left
+			left: 20px
+			text-align: left
+			max-width: 280px
+			#pseudo
+				font-weight: bold
