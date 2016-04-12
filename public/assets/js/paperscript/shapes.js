@@ -143,32 +143,34 @@ function onFrame() {
 	}*/
 }
 
-/*window.ondevicemotion = function(event) {
-  abscisses = event.accelerationIncludingGravity.x
-  ordonnees = event.accelerationIncludingGravity.y
+if(window.innerWidth <= 1024){
+	window.ondevicemotion = function(event) {
+	  abscisses = event.accelerationIncludingGravity.x
+	  ordonnees = event.accelerationIncludingGravity.y
 
-  if(typeof currentUser !== "undefined") {
-	  // left
-	  if (abscisses > 3) {
-	  	left();
-	  }
+	  if(typeof currentUser !== "undefined") {
+		  // left
+		  if (abscisses > 3) {
+		  	left();
+		  }
 
-	  // right
-	  if (abscisses < -3) {
-	  	right();
-	  }
+		  // right
+		  if (abscisses < -3) {
+		  	right();
+		  }
 
-	  // down
-	  if (ordonnees > 6) {
-	  	down();
-	  }
+		  // down
+		  if (ordonnees > 6) {
+		  	down();
+		  }
 
-	  // up
-	  if (ordonnees < 0) {
-	  	up();
+		  // up
+		  if (ordonnees < 0) {
+		  	up();
+		  }
 	  }
-  }
-}*/
+	}
+}
 
 function up() {
 	for (var i = 0; i < balls.length; i++) {
