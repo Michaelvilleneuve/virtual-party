@@ -63,6 +63,7 @@ canvas {
   left: 0;
   right: 0;
   bottom: 0;
+  z-index: 0;
 }
 
 @media only screen and (min-width: 668px) {
@@ -81,6 +82,7 @@ header {
   top: 0;
   left: 0;
   width: 100%;
+  z-index: 1;
 }
 @media only screen and (max-width: 667px) {
   header {
@@ -144,6 +146,7 @@ header .infos.left #pseudo {
   left: 20px;
   bottom: 20px;
   background-color: #fff;
+  z-index: 1;
 }
 @media only screen and (max-width: 667px) {
   .sidebar {

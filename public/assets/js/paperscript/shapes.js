@@ -1,25 +1,3 @@
-var grid = new Group();
-
-var largeur = view.size._width;
-var hauteur = view.size._height;
-var nblignes = hauteur/15;
-var nbcolonnes = hauteur/15;
-
-for (var i = 0; i < nblignes; i++) {
-	var from = new Point(-largeur/2,i*nblignes - hauteur/2);
-	var to = new Point(largeur,i*nblignes - hauteur/2);
-	var path = new Path.Line(from, to);
-	path.strokeColor = "#E6E6E6";
-	grid.addChild(path);
-}
-for (var i = 0; i < nbcolonnes; i++) {
-	var from = new Point(i*nbcolonnes - largeur/2 ,-hauteur/2);
-	var to = new Point(i*nbcolonnes - largeur/2,hauteur);
-	var path = new Path.Line(from, to);
-	path.strokeColor = "#E6E6E6";
-	grid.addChild(path);
-}
-
 function Ball(i, r, p, v, pseudo) {
 	this.socketId = i;
 	this.radius = r;
@@ -253,6 +231,30 @@ paper.view.setCenter(0,0);
 balls = [];
 var lines = new Group();
 var numBalls = 50;
+
+var grid = new Group();
+
+var largeur = view.size._width;
+var hauteur = view.size._height;
+var nblignes = hauteur/15;
+var nbcolonnes = hauteur/15;
+
+for (var i = 0; i < nblignes; i++) {
+	var from = new Point(-largeur/2,i*nblignes - hauteur/2);
+	var to = new Point(largeur,i*nblignes - hauteur/2);
+	var path = new Path.Line(from, to);
+	path.strokeColor = "#E6E6E6";
+	project.activeLayer.insertChild(0, path);
+	grid.addChild(path);
+}
+for (var i = 0; i < nbcolonnes; i++) {
+	var from = new Point(i*nbcolonnes - largeur/2 ,-hauteur/2);
+	var to = new Point(i*nbcolonnes - largeur/2,hauteur);
+	var path = new Path.Line(from, to);
+	path.strokeColor = "#E6E6E6";
+	project.activeLayer.insertChild(0, path);
+	grid.addChild(path);
+}
 
 socket.on('user', function(user){
 	currentUser = user;
