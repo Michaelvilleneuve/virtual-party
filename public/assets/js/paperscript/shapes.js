@@ -320,6 +320,7 @@ socket.on('remove', function(user){
 		if(balls[i].socketId === user.socketId){
 			try {
 				balls[i].path.remove();	
+				balls[i].text.remove();	
 				balls.splice(i, 1);
 			} catch(err) {
 				console.log(err);
