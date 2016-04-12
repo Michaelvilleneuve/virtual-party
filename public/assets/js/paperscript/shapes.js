@@ -149,7 +149,6 @@ function onKeyDown(event) {
 		for (var i = 1; i < balls.length; i++) {
 			//balls[i].maxVec = 2;
 			balls[i].point.x += 10;
-			console.log(balls[i]);
 		}
 		currentUser.pos_x -= 10;
 		socket.emit('move_left');
@@ -175,7 +174,7 @@ var numBalls = 50;
 
 socket.on('user', function(user){
 	currentUser = user;
-
+	createBall(currentUser);
 });
 
 function createBall(user){
@@ -203,8 +202,6 @@ function refresh() {
 
 /** Réception des utilisateurs **/
 socket.on('users', function(users){
-
-	createBall(currentUser);
 
 	for (var i = 0; i < (users.length - 1); i++) {
 		if( users[i].socketId !== currentUser.socketId){
