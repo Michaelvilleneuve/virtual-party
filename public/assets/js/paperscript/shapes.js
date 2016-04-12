@@ -202,9 +202,12 @@ function createBall(user){
 }
 
 function definePos(user) {
+	var pos_x = typeof currentUser === "undefined" ? 0 : currentUser.pos_x;
+	var pos_y = typeof currentUser === "undefined" ? 0 : currentUser.pos_y;
+
 	var datas = {
 		id: user.socketId,
-		position: new Point((user.pos_x - currentUser.pos_x) , (user.pos_y - currentUser.pos_y)),
+		position: new Point((user.pos_x - pos_x) , (user.pos_y - pos_y)),
 		vector: new Point({
 			angle: 360,
 			length: 100
@@ -235,10 +238,13 @@ socket.on('update', function(u){
 	var userToUpdate = u;
 	var ballAlreadyExists = false;
 
+	var pos_x = typeof currentUser === "undefined" ? 0 : currentUser.pos_x;
+	var pos_y = typeof currentUser === "undefined" ? 0 : currentUser.pos_y;
+
 	for (var i = 0; i < balls.length; i++) {
 		if(balls[i].socketId === userToUpdate.socketId){
-			balls[i].point.x = userToUpdate.pos_x - currentUser.pos_x;
-			balls[i].point.y = userToUpdate.pos_y - currentUser.pos_y;
+			balls[i].point.x = userToUpdate.pos_x - pos_x;
+			balls[i].point.y = userToUpdate.pos_y - pos_y;
 			ballAlreadyExists = true;
 			break;
 		}
