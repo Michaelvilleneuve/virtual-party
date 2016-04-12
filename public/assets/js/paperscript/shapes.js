@@ -131,24 +131,24 @@ function onKeyDown(event) {
 
 	if(event.key === "up" || event.key === "z"){
 		for (var i = 1; i < balls.length; i++) {
-			balls[i].maxVec = 2;
-			balls[i].vector.y += 10;
+			//balls[i].maxVec = 2;
+			balls[i].point.y += 10;
 		}
 		currentUser.pos_y -= 10;
 		socket.emit('move_up');
 	}
 	if(event.key === "down" || event.key === "s"){
 		for (var i = 1; i < balls.length; i++) {
-			balls[i].maxVec = 2;
-			balls[i].vector.y -= 10;
+			//balls[i].maxVec = 2;
+			balls[i].point.y -= 10;
 		}
 		currentUser.pos_y += 10;
 		socket.emit('move_down');
 	}
 	if(event.key === "left" || event.key === "q"){
 		for (var i = 1; i < balls.length; i++) {
-			balls[i].maxVec = 2;
-			balls[i].vector.x += 10;
+			//balls[i].maxVec = 2;
+			balls[i].point.x += 10;
 			console.log(balls[i]);
 		}
 		currentUser.pos_x -= 10;
@@ -156,8 +156,8 @@ function onKeyDown(event) {
 	}
 	if(event.key === "right" || event.key === "d"){
 		for (var i = 1; i < balls.length; i++) {
-			balls[i].maxVec = 2;
-			balls[i].vector.x -= 10;
+			//balls[i].maxVec = 2;
+			balls[i].point.x -= 10;
 		}
 		currentUser.pos_x += 10;
 		socket.emit('move_right');
@@ -226,8 +226,8 @@ socket.on('update', function(u){
 
 	for (var i = 0; i < balls.length; i++) {
 		if(balls[i].socketId === userToUpdate.socketId){
-			balls[i].vector.x = userToUpdate.pos_x - currentUser.pos_x;
-			balls[i].vector.y = userToUpdate.pos_y - currentUser.pos_y;
+			balls[i].point.x = userToUpdate.pos_x - currentUser.pos_x;
+			balls[i].point.y = userToUpdate.pos_y - currentUser.pos_y;
 			ballAlreadyExists = true;
 			break;
 		}
