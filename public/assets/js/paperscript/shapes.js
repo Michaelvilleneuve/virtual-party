@@ -115,10 +115,17 @@ function onFrame() {
 			balls[i].react(balls[j]);
 		}
 	}
+
+	for (var j = 0; j < balls.length; j++) {
+		yourball.react(balls[j]);
+	}
+	if(typeof(yourball) !== "undefined") {
+		yourball.iterate();
+	}
+
 	for (var i = 0, l = balls.length; i < l; i++) {
 		balls[i].iterate();
 	}
-
 	// decelerate and stop the ball if not moved
 	/*for (var i = 1; i < balls.length; i++) {
 		if(balls[i].maxVec > 0.1){
@@ -130,28 +137,28 @@ function onFrame() {
 function onKeyDown(event) {
 
 	if(event.key === "up" || event.key === "z"){
-		for (var i = 1; i < balls.length; i++) {
+		for (var i = 0; i < balls.length; i++) {
 			balls[i].point.y += 10;
 		}
 		currentUser.pos_y -= 10;
 		socket.emit('move_up');
 	}
 	if(event.key === "down" || event.key === "s"){
-		for (var i = 1; i < balls.length; i++) {
+		for (var i = 0; i < balls.length; i++) {
 			balls[i].point.y -= 10;
 		}
 		currentUser.pos_y += 10;
 		socket.emit('move_down');
 	}
 	if(event.key === "left" || event.key === "q"){
-		for (var i = 1; i < balls.length; i++) {
+		for (var i = 0; i < balls.length; i++) {
 			balls[i].point.x += 10;
 		}
 		currentUser.pos_x -= 10;
 		socket.emit('move_left');
 	}
 	if(event.key === "right" || event.key === "d"){
-		for (var i = 1; i < balls.length; i++) {
+		for (var i = 0; i < balls.length; i++) {
 			balls[i].point.x -= 10;
 		}
 		currentUser.pos_x += 10;
@@ -171,44 +178,53 @@ var numBalls = 50;
 socket.on('user', function(user){
 	currentUser = user;
 
+	createYourBall(currentUser);
 });
 
+function createYourBall(user){
+	var datas = definePos(user);
+
+	yourball = new Ball(datas.id, datas.radius, datas.position, datas.vector);
+
+	yourball.path.fillColor.hue = 320;
+	yourball.p = new Point(view.size/2, view.size/2);
+}
+
 function createBall(user){
-	var position = new Point((user.pos_x - currentUser.pos_x) , (user.pos_y - currentUser.pos_y));
-	var id = user.socketId;
-	var vector = new Point({
-		angle: 360,
-		length: 100
-	});
-	var radius = 20;
-	var pseudoDefined = true;
+	var datas = definePos(user);
 
 	if(user.pseudo === "" || user.pseudo == undefined){
-		pseudoDefined = false;
+		datas.pseudoDefined = false;
 	}
 
-	if(pseudoDefined || balls.length === 0){
-		balls.push(new Ball(id, radius, position, vector));
+	if(datas.pseudoDefined || balls.length === 0){
+		balls.push(new Ball(datas.id, datas.radius, datas.position, datas.vector));
 	}
 }
 
+function definePos(user) {
+	var datas = {
+		id: user.socketId,
+		position: new Point((user.pos_x - currentUser.pos_x) , (user.pos_y - currentUser.pos_y)),
+		vector: new Point({
+			angle: 360,
+			length: 100
+		}),
+		radius: 20,
+		pseudoDefined: true
+	}
+	return datas;
+}
+
 function refresh() {
-	document.getElementById('infos').innerHTML = balls.length + ' utilisateur(s) en ligne';
+	document.getElementById('infos').innerHTML = balls.length+1 + ' utilisateur(s) en ligne';
 }
 
 /** Réception des utilisateurs **/
 socket.on('users', function(users){
-
-	createBall(currentUser);
-
 	for (var i = 0; i < (users.length - 1); i++) {
-		if( users[i].socketId !== currentUser.socketId){
-			createBall(users[i]);
-		}
+		createBall(users[i]);
 	}
-
-	balls[0].path.fillColor.hue = 320;
-	balls[0].p = new Point(view.size/2, view.size/2);
 
 	refresh();
 });
