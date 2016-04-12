@@ -229,11 +229,6 @@ function createYourBall(user){
 
 	yourball.path.fillColor.hue = 320;
 	yourball.p = new Point(view.size/2, view.size/2);
-
-	var pointTextLocation = new Point(view.size/2, view.size/2);
-	var myText = new paper.PointText(pointTextLocation);
-	myText.fillColor = 'black';
-	myText.content = user.pseudo;
 }
 
 function createBall(user){
@@ -245,6 +240,15 @@ function createBall(user){
 
 	if(datas.pseudoDefined || balls.length === 0){
 		balls.push(new Ball(datas.id, datas.radius, datas.position, datas.vector));
+		var pointTextLocation = datas.position;
+		var myText = new PointText({
+			point: pointTextLocation,
+			content: user.pseudo,
+			fillColor: 'black',
+			fontFamily: 'Executive',
+		    fontWeight: 'regular',
+		    fontSize: 20
+		});
 	}
 }
 
