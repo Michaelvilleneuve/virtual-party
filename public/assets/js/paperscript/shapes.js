@@ -241,7 +241,8 @@ socket.on('remove', function(user){
 		if(balls[i].socketId === user.socketId){
 			try {
 				balls[i].path.remove();	
-				delete balls[i];
+				balls.splice(i, 1);
+				console.log(balls);
 			} catch(err) {
 				console.log(err);
 			}
