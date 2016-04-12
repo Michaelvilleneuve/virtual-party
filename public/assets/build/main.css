@@ -48,4 +48,10 @@ form {
   top: 0;
 }
 
+#infos {
+  position: fixed;
+  top: 5px;
+  left: 5px;
+}
+
 /*# sourceMappingURL=main.css.map */

@@ -71,10 +71,10 @@ Ball.prototype = {
 			};
 			lines.addChild(path);
 
-			//this.calcBounds(b);
-			//b.calcBounds(this);
-			//this.updateBounds();
-			//b.updateBounds();
+			this.calcBounds(b);
+			b.calcBounds(this);
+			this.updateBounds();
+			b.updateBounds();
 		}
 	},
 
@@ -182,17 +182,21 @@ function createBall(user){
 	});
 	var radius = 20;
 	var pseudoDefined = true;
+
 	if(user.pseudo === "" || user.pseudo == undefined){
 		pseudoDefined = false;
 	}
+
 	if(pseudoDefined || balls.length === 0){
 		balls.push(new Ball(id, radius, position, vector));
 	}
-	console.log("pseudoDefined = "+pseudoDefined);
-	console.log("pseudo = "+user.pseudo);
-	console.log(balls);
 }
 
+function refresh() {
+	document.getElementById('infos').innerHTML = balls.length + ' utilisateur(s) en ligne';
+}
+
+/** Réception des utilisateurs **/
 socket.on('users', function(users){
 
 	createBall(currentUser);
@@ -206,45 +210,44 @@ socket.on('users', function(users){
 	balls[0].path.fillColor.hue = 320;
 	balls[0].p = new Point(view.size/2, view.size/2);
 
+	refresh();
 });
 
+/** Mise à jour d'un utilisateur **/
 socket.on('update', function(u){ 
+
 	var userToUpdate = u;
-	console.log(userToUpdate);
 	var ballAlreadyExists = false;
-	console.log(balls.length)
-	// pour chaque boule
+
 	for (var i = 0; i < balls.length; i++) {
-		// on sélectionne la boule qui doit bouger
 		if(balls[i].socketId === userToUpdate.socketId){
-			// seléctionnée
 			balls[i].point.x = userToUpdate.pos_x - currentUser.pos_x;
 			balls[i].point.y = userToUpdate.pos_y - currentUser.pos_y;
 			ballAlreadyExists = true;
 			break;
-			console.log("break");
-		} else {
-			console.log(balls[i].socketId);
-			console.log(userToUpdate.socketId);
 		}
 	}
+
 	if(!ballAlreadyExists){
 		createBall(userToUpdate);
-		console.log("balle créée");
 	}
+
+	refresh();
 });
 
-
+/** Suppression **/
 socket.on('remove', function(user){
-	console.log("delete");
+	refresh();
+
 	for (var i = 0; i < balls.length; i++) {
 		if(balls[i].socketId === user.socketId){
 			try {
 				balls[i].path.remove();	
-				delete balls[i];
+				balls.splice(i, 1);
 			} catch(err) {
 				console.log(err);
 			}
 		}
 	}
+
 });
