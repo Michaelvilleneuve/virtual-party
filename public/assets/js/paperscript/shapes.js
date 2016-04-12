@@ -232,3 +232,18 @@ socket.on('update', function(userToUpdate){
 		console.log("balle créée");
 	}
 });
+
+
+socket.on('remove', function(user){
+	console.log("delete");
+	for (var i = 0; i < balls.length; i++) {
+		if(balls[i].socketId === user.socketId){
+			try {
+				balls[i].path.remove();	
+				delete balls[i];
+			} catch(err) {
+				console.log(err);
+			}
+		}
+	}
+});
