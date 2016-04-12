@@ -1,4 +1,4 @@
-function Ball(i, r, p, v) {
+function Ball(i, r, p, v, pseudo) {
 	this.socketId = i;
 	this.radius = r;
 	this.point = p;
@@ -16,7 +16,15 @@ function Ball(i, r, p, v) {
 		},
 		blendMode: 'lighter'
 	});
-
+	this.textPosition = new Point(this.point.x + 15, this.point.y - 20);
+	this.text = new PointText({
+		point: this.textPosition,
+		content: pseudo,
+		fillColor: 'black',
+		fontFamily: 'Executive',
+	    fontWeight: 'regular',
+	    fontSize: 24
+	});
 	for (var i = 0; i < this.numSegment; i ++) {
 		this.boundOffset.push(this.radius);
 		this.boundOffsetBuff.push(this.radius);
@@ -128,14 +136,14 @@ function onFrame() {
 		balls[i].iterate();
 	}
 	// decelerate and stop the ball if not moved
-	for (var i = 1; i < balls.length; i++) {
+	/*for (var i = 1; i < balls.length; i++) {
 		if(balls[i].maxVec > 0.1){
 			balls[i].maxVec -= 0.2;
 		}
-	}
+	}*/
 }
 
-window.ondevicemotion = function(event) {
+/*window.ondevicemotion = function(event) {
   abscisses = event.accelerationIncludingGravity.x
   ordonnees = event.accelerationIncludingGravity.y
 
@@ -160,11 +168,12 @@ window.ondevicemotion = function(event) {
 	  	up();
 	  }
   }
-}
+}*/
 
 function up() {
 	for (var i = 0; i < balls.length; i++) {
 		balls[i].point.y += 10;
+		balls[i].text.point.y += 10;
 	}
 	currentUser.pos_y -= 10;
 	socket.emit('move_up');
@@ -172,6 +181,8 @@ function up() {
 function down() {
 	for (var i = 0; i < balls.length; i++) {
 		balls[i].point.y -= 10;
+		console.log(balls[i].textPosition);
+		balls[i].text.point.y -= 10;
 	}
 	currentUser.pos_y += 10;
 	socket.emit('move_down');
@@ -179,6 +190,7 @@ function down() {
 function left() {
 	for (var i = 0; i < balls.length; i++) {
 		balls[i].point.x += 10;
+		balls[i].text.point.x += 10;
 	}
 	currentUser.pos_x -= 10;
 	socket.emit('move_left');
@@ -186,6 +198,7 @@ function left() {
 function right() {
 	for (var i = 0; i < balls.length; i++) {
 		balls[i].point.x -= 10;
+		balls[i].text.point.x -= 10;
 	}
 	currentUser.pos_x += 10;
 	socket.emit('move_right');
@@ -225,7 +238,7 @@ socket.on('user', function(user){
 function createYourBall(user){
 	var datas = definePos(user);
 
-	yourball = new Ball(datas.id, datas.radius, datas.position, datas.vector);
+	yourball = new Ball(datas.id, datas.radius, datas.position, datas.vector, user.pseudo);
 
 	yourball.path.fillColor.hue = 320;
 	yourball.p = new Point(view.size/2, view.size/2);
@@ -239,16 +252,7 @@ function createBall(user){
 	}
 
 	if(datas.pseudoDefined || balls.length === 0){
-		balls.push(new Ball(datas.id, datas.radius, datas.position, datas.vector));
-		var pointTextLocation = datas.position;
-		var myText = new PointText({
-			point: pointTextLocation,
-			content: user.pseudo,
-			fillColor: 'black',
-			fontFamily: 'Executive',
-		    fontWeight: 'regular',
-		    fontSize: 20
-		});
+		balls.push(new Ball(datas.id, datas.radius, datas.position, datas.vector, user.pseudo));
 	}
 }
 
@@ -259,6 +263,7 @@ function definePos(user) {
 	var datas = {
 		id: user.socketId,
 		position: new Point((user.pos_x - pos_x) , (user.pos_y - pos_y)),
+		positionText: new Point((user.pos_x - pos_x - 20) , (user.pos_y - pos_y - 20)),
 		vector: new Point({
 			angle: 360,
 			length: 100

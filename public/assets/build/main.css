@@ -30,7 +30,7 @@
 }
 html, body {
   background-color: #fafafa;
-  color: #1D1D1D;
+  color: #000;
   -moz-osx-font-smoothing: grayscale;
   -ms-interpolation-mode: auto;
   -webkit-font-smoothing: antialiased !important;
