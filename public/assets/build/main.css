@@ -123,14 +123,20 @@ form input:active, form input:focus {
   color: #000;
   top: 0;
   padding: 10px;
+  overflow-x: hidden;
+  overflow-y: scroll;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
 #messages span {
   color: #09438B;
-  font-family: "Executive", Helvetica Neue, Helvetica, Arial, sans-serif;
   padding-right: 10px;
+}
+#messages p {
+  max-width: 100%;
+  word-break: break-all;
+  margin: 0 auto;
 }
 
 header {
