@@ -1,3 +1,5 @@
+console.log(view.size);
+
 function Ball(i, r, p, v, pseudo) {
 	this.socketId = i;
 	this.radius = r;
