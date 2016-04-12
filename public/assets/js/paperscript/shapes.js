@@ -71,10 +71,10 @@ Ball.prototype = {
 			};
 			lines.addChild(path);
 
-			//this.calcBounds(b);
-			//b.calcBounds(this);
-			//this.updateBounds();
-			//b.updateBounds();
+			this.calcBounds(b);
+			b.calcBounds(this);
+			this.updateBounds();
+			b.updateBounds();
 		}
 	},
 
@@ -193,7 +193,7 @@ function createBall(user){
 }
 
 function refresh() {
-	document.getElementById('infos').innerHTML = balls.length + ' utilisateurs en ligne';
+	document.getElementById('infos').innerHTML = balls.length + ' utilisateur(s) en ligne';
 }
 
 /** Réception des utilisateurs **/

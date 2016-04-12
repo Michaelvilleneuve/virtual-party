@@ -70,8 +70,8 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('message', function(message) {
        User.find().
-            where('pos_x').gt(user.pos_x - 30).lt(user.pos_x + 30).
-            where('pos_y').gt(user.pos_y - 30).lt(user.pos_y + 30).
+            where('pos_x').gt(user.pos_x - 60).lt(user.pos_x + 60).
+            where('pos_y').gt(user.pos_y - 60).lt(user.pos_y + 60).
             exec(
             function (err, users) {
                 if (err) return console.error(err);
