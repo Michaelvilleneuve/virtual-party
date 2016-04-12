@@ -226,8 +226,8 @@ socket.on('update', function(u){
 
 	for (var i = 0; i < balls.length; i++) {
 		if(balls[i].socketId === userToUpdate.socketId){
-			balls[i].point.x = userToUpdate.pos_x - currentUser.pos_x;
-			balls[i].point.y = userToUpdate.pos_y - currentUser.pos_y;
+			balls[i].vector.x = userToUpdate.pos_x - currentUser.pos_x;
+			balls[i].vector.y = userToUpdate.pos_y - currentUser.pos_y;
 			ballAlreadyExists = true;
 			break;
 		}
