@@ -9,11 +9,7 @@ function Ball(i, r, p, v, pseudo) {
 	this.boundOffsetBuff = [];
 	this.sidePoints = [];
 	this.path = new Path({
-		fillColor: {
-			hue: 260,
-			saturation: 1,
-			brightness: 0.6
-		},
+		fillColor: "#777777"
 		blendMode: 'lighter'
 	});
 	this.textPosition = new Point(this.point.x + 15, this.point.y - 20);
@@ -242,7 +238,7 @@ function createYourBall(user){
 
 	yourball = new Ball(datas.id, datas.radius, datas.position, datas.vector, user.pseudo);
 
-	yourball.path.fillColor.hue = 320;
+	yourball.path.fillColor = "#09438B";
 	yourball.p = new Point(view.size/2, view.size/2);
 }
 
@@ -303,6 +299,8 @@ socket.on('update', function(u){
 		if(balls[i].socketId === userToUpdate.socketId){
 			balls[i].point.x = userToUpdate.pos_x - pos_x;
 			balls[i].point.y = userToUpdate.pos_y - pos_y;
+			balls[i].text.point.x = userToUpdate.pos_x - pos_x + 15;
+			balls[i].text.point.y = userToUpdate.pos_y - pos_y - 20;
 			ballAlreadyExists = true;
 			break;
 		}
