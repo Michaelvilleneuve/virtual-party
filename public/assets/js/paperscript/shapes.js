@@ -9,7 +9,11 @@ function Ball(i, r, p, v, pseudo) {
 	this.boundOffsetBuff = [];
 	this.sidePoints = [];
 	this.path = new Path({
-		fillColor: "#777777"
+		fillColor: {
+			hue: 0,
+			saturation: 0,
+			brightness: 0.47
+		},
 		blendMode: 'lighter'
 	});
 	this.textPosition = new Point(this.point.x + 15, this.point.y - 20);
@@ -68,11 +72,8 @@ Ball.prototype = {
 			var from = this.point;
 			var to = b.point;
 			var path = new Path.Line(from, to);
-			path.strokeColor = {
-				hue: 360,
-				saturation: 1,
-				brightness: 0.6
-			};
+			path.strokeColor = "#09438B";
+			path.fillColor = "#09438B";
 			lines.addChild(path);
 
 			this.calcBounds(b);
@@ -179,7 +180,6 @@ function up() {
 function down() {
 	for (var i = 0; i < balls.length; i++) {
 		balls[i].point.y -= 10;
-		console.log(balls[i].textPosition);
 		balls[i].text.point.y -= 10;
 	}
 	currentUser.pos_y += 10;
