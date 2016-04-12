@@ -127,11 +127,11 @@ function onFrame() {
 		balls[i].iterate();
 	}
 	// decelerate and stop the ball if not moved
-	/*for (var i = 1; i < balls.length; i++) {
+	for (var i = 1; i < balls.length; i++) {
 		if(balls[i].maxVec > 0.1){
 			balls[i].maxVec -= 0.2;
 		}
-	}*/
+	}
 }
 
 function onKeyDown(event) {
@@ -144,21 +144,21 @@ function onKeyDown(event) {
 		socket.emit('move_up');
 	}
 	if(event.key === "down" || event.key === "s"){
-		for (var i = 0; i < balls.length; i++) {
+		for (var i = 1; i < balls.length; i++) {
 			balls[i].point.y -= 10;
 		}
 		currentUser.pos_y += 10;
 		socket.emit('move_down');
 	}
 	if(event.key === "left" || event.key === "q"){
-		for (var i = 0; i < balls.length; i++) {
+		for (var i = 1; i < balls.length; i++) {
 			balls[i].point.x += 10;
 		}
 		currentUser.pos_x -= 10;
 		socket.emit('move_left');
 	}
 	if(event.key === "right" || event.key === "d"){
-		for (var i = 0; i < balls.length; i++) {
+		for (var i = 1; i < balls.length; i++) {
 			balls[i].point.x -= 10;
 		}
 		currentUser.pos_x += 10;
@@ -177,7 +177,6 @@ var numBalls = 50;
 
 socket.on('user', function(user){
 	currentUser = user;
-
 	createYourBall(currentUser);
 });
 
@@ -222,6 +221,7 @@ function refresh() {
 
 /** Réception des utilisateurs **/
 socket.on('users', function(users){
+
 	for (var i = 0; i < (users.length - 1); i++) {
 		createBall(users[i]);
 	}
