@@ -208,7 +208,8 @@ socket.on('users', function(users){
 
 });
 
-socket.on('update', function(userToUpdate){ 
+socket.on('update', function(u){ 
+	var userToUpdate = u;
 	console.log(userToUpdate);
 	var ballAlreadyExists = false;
 	console.log(balls.length)
