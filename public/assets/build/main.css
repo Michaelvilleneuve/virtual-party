@@ -71,17 +71,25 @@ canvas {
   }
 }
 
+.blue {
+  color: #0000c4;
+}
+
 header {
-  background-color: #09438B;
-  height: 55px;
-  color: #fff;
+  background-color: rgba(255, 255, 255, 0);
+  height: 64px;
+  color: #0000c4;
   padding: 0;
   text-align: center;
   position: fixed;
+  padding: 16px 0px;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 1;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 @media only screen and (max-width: 667px) {
   header {
@@ -90,16 +98,15 @@ header {
 }
 header h1 {
   text-align: center;
-  background-color: #1C5A96;
   padding: 0 30px;
   height: 100%;
   display: inline-block;
   margin: 0 auto;
-  color: #fff;
+  color: #0000c4;
   letter-spacing: 0.1px;
   font-weight: normal;
-  font-size: 20px;
-  line-height: 55px;
+  font-size: 24px;
+  line-height: 32px;
 }
 @media only screen and (max-width: 667px) {
   header h1 {
@@ -112,10 +119,27 @@ header h1 span {
 header .infos {
   position: absolute;
   font-size: 16px;
-  top: 0px;
-  line-height: 55px;
-  right: 20px;
+  top: 16px;
+  line-height: 32px;
+  right: 24px;
   text-align: right;
+}
+header .infos .round {
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  vertical-align: middle;
+  margin-left: 8px;
+  position: relative;
+  display: inline-block;
+  background-color: #fff;
+  border: 2px solid #0000c4;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-border-radius: 32px;
+  -moz-border-radius: 32px;
+  border-radius: 32px;
 }
 @media only screen and (max-width: 667px) {
   header .infos {
@@ -125,7 +149,7 @@ header .infos {
   }
 }
 header .infos.left {
-  left: 20px;
+  left: 24px;
   text-align: left;
   max-width: 280px;
 }
@@ -133,6 +157,11 @@ header .infos.left {
   header .infos.left {
     display: none;
   }
+}
+header .infos.left .round {
+  background-color: #0000c4;
+  margin-right: 8px;
+  margin-left: 0;
 }
 header .infos.left #pseudo {
   font-weight: bold;
@@ -171,9 +200,9 @@ form {
   padding: 0;
   margin: 0;
   height: 10%;
-  border-left: 1px solid #09438B;
-  border-right: 1px solid #09438B;
-  border-bottom: 1px solid #09438B;
+  border-left: 1px solid #0000c4;
+  border-right: 1px solid #0000c4;
+  border-bottom: 1px solid #0000c4;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -220,7 +249,7 @@ form input:active, form input:focus {
   height: 90%;
   width: 100%;
   background: #fff;
-  border: 1px solid #09438B;
+  border: 1px solid #0000c4;
   color: #000;
   top: 0;
   padding: 10px;
@@ -231,7 +260,7 @@ form input:active, form input:focus {
   box-sizing: border-box;
 }
 #messages span {
-  color: #09438B;
+  color: #0000c4;
   padding-right: 10px;
 }
 #messages p {
@@ -248,7 +277,7 @@ form input:active, form input:focus {
   width: 60px;
   height: 60px;
   color: #fff;
-  background-color: #09438B;
+  background-color: #0000c4;
   text-align: center;
   z-index: 2;
   -webkit-border-radius: 60px;
