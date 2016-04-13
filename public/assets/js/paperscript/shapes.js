@@ -1,4 +1,5 @@
-var grid = new Group();
+grid = new Group();
+grid.sendToBack();
 
 var largeur = 20000;
 var hauteur = 20000;
@@ -12,6 +13,7 @@ for (var i = 0; i < nblignes; i++) {
 	path.strokeColor = "#E6E6E6";
 	grid.addChild(path);
 }
+
 for (var i = 0; i < nbcolonnes; i++) {
 	var from = new Point(i*nbcolonnes/10-10000,-hauteur/2);
 	var to = new Point(i*nbcolonnes/10-10000,hauteur);
@@ -19,6 +21,9 @@ for (var i = 0; i < nbcolonnes; i++) {
 	path.strokeColor = "#E6E6E6";
 	grid.addChild(path);
 }
+
+ballsGroup = new Group();
+ballsGroup.bringToFront();
 
 function Ball(i, r, p, v, pseudo) {
 	this.socketId = i;
@@ -264,6 +269,7 @@ function createYourBall(user){
 	var datas = definePos(user);
 
 	yourball = new Ball(datas.id, datas.radius, datas.position, datas.vector, user.pseudo);
+	ballsGroup.addChild(yourball.path);
 
 	yourball.path.fillColor = "#09438B";
 	yourball.p = new Point(view.size/2, view.size/2);
@@ -278,6 +284,7 @@ function createBall(user){
 
 	if(datas.pseudoDefined || balls.length === 0){
 		balls.push(new Ball(datas.id, datas.radius, datas.position, datas.vector, user.pseudo));
+		ballsGroup.addChild(new Ball(datas.id, datas.radius, datas.position, datas.vector, user.pseudo).path);
 	}
 }
 

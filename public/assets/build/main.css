@@ -170,10 +170,17 @@ form {
   width: 100%;
   padding: 0;
   margin: 0;
-  border-top: 1px solid #09438B;
+  height: 10%;
+  border-left: 1px solid #09438B;
+  border-right: 1px solid #09438B;
+  border-bottom: 1px solid #09438B;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 form textarea {
   display: block;
+  font-family: "FiraSans", Helvetica Neue, Helvetica, Arial, sans-serif;
   position: relative;
   margin: 0;
   width: 100%;
@@ -190,6 +197,7 @@ form textarea:active, form textarea:focus {
 }
 form input {
   position: absolute;
+  font-family: "FiraSans", Helvetica Neue, Helvetica, Arial, sans-serif;
   right: 10px;
   bottom: 0px;
   appearance: none;
@@ -209,7 +217,7 @@ form input:active, form input:focus {
 #messages {
   position: absolute;
   left: 0;
-  height: 100%;
+  height: 90%;
   width: 100%;
   background: #fff;
   border: 1px solid #09438B;
@@ -234,6 +242,7 @@ form input:active, form input:focus {
 
 .open-sidebar {
   position: fixed;
+  cursor: pointer;
   bottom: 10px;
   right: 10px;
   width: 60px;
