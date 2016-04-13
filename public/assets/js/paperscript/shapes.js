@@ -5,8 +5,8 @@ grid.sendToBack();
 
 var largeur = 20000;
 var hauteur = 20000;
-var nblignes = 400;
-var nbcolonnes = 400;
+var nblignes = 350;
+var nbcolonnes = 350;
 
 for (var i = 0; i < nblignes; i++) {
 	var from = new Point(-largeur/2,i*nblignes/10-10000);
