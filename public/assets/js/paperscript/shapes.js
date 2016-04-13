@@ -9,8 +9,8 @@ var nblignes = 350;
 var nbcolonnes = 350;
 
 for (var i = 0; i < nblignes; i++) {
-	var from = new Point(-largeur/2,i*nblignes/10-10000);
-	var to = new Point(largeur,i*nblignes/10-10000);
+	var from = new Point(-largeur/2,i*nblignes/10-2000);
+	var to = new Point(largeur,i*nblignes/10-2000);
 	var path = new Path.Line(from, to);
 	path.fillColor = "#ffffff";
 	path.strokeColor = "#eeeeee";
@@ -21,8 +21,8 @@ for (var i = 0; i < nblignes; i++) {
 }
 
 for (var i = 0; i < nbcolonnes; i++) {
-	var from = new Point(i*nbcolonnes/10-10000,-hauteur/2);
-	var to = new Point(i*nbcolonnes/10-10000,hauteur);
+	var from = new Point(i*nbcolonnes/10-2000,-hauteur/2);
+	var to = new Point(i*nbcolonnes/10-2000,hauteur);
 	var path = new Path.Line(from, to);
 	path.fillColor = "#ffffff";
 	path.strokeColor = "#eeeeee";
