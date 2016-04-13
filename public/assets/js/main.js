@@ -1,6 +1,15 @@
+$(document).ready(function(){
+
 var socket = io();
-var pseudo = prompt("Pseudo?");
-socket.emit("set_pseudo", pseudo);
+
+$(document).on('click','#pseudo-sub', function(event) {
+	event.preventDefault();
+	var pseudo = $('#pseudo-content').val();
+	socket.emit("set_pseudo", pseudo);	
+})
+
+
+
 socket.on('message', function(message){
 	document.getElementById('messages-inner').innerHTML = document.getElementById('messages-inner').innerHTML + "<p><span>" + message.user.pseudo + ":</span>" + message.message +'</p>';
 	$('#messages').scrollTop($('#messages-inner').height());
@@ -21,8 +30,6 @@ function send() {
 	document.getElementById("message").value = "";
 	window.NavigationZQSDEnabled = true;
 }
-
-$(document).ready(function(){
 
 	// ZQSD nav on/off when writing message
 	document.getElementById('message').addEventListener('keydown', function (e){
