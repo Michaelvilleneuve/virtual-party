@@ -2,7 +2,7 @@ socket = io();
 
 $(document).ready(function(){
 
-
+//$(".pseudo #pseudo-content").focus();
 $(document).on('click','#pseudo-sub', function(event) {
 	event.preventDefault();
 	var pseudo = $('#pseudo-content').val();

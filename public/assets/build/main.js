@@ -59,7 +59,7 @@ e(a)}n+="}"}else e(t);return Function("str",n)}function r(){this.line=Pt,this.co
 
 $(document).ready(function(){
 
-
+//$(".pseudo #pseudo-content").focus();
 $(document).on('click','#pseudo-sub', function(event) {
 	event.preventDefault();
 	var pseudo = $('#pseudo-content').val();
