@@ -20,10 +20,18 @@ socket.on('message', function(message){
 document.onkeypress = kp;
 function kp(e){
     var charCode = (typeof e.which == "number") ? e.which : e.keyCode
-    if(charCode===13){
-    	e.preventDefault();
-    	e.stopPropagation();
-		send();
+    if( $(".pseudo").is(":visible") ){
+    	if(charCode===13){
+	    	e.preventDefault();
+	    	e.stopPropagation();
+			$("#pseudo-sub").click();
+		}	
+    } else {
+	    if(charCode===13){
+	    	e.preventDefault();
+	    	e.stopPropagation();
+			send();
+		}
 	}
 }
 function send() {

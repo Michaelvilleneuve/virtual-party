@@ -59,7 +59,6 @@ e(a)}n+="}"}else e(t);return Function("str",n)}function r(){this.line=Pt,this.co
 
 $(document).ready(function(){
 
-//$(".pseudo #pseudo-content").focus();
 $(document).on('click','#pseudo-sub', function(event) {
 	event.preventDefault();
 	var pseudo = $('#pseudo-content').val();
@@ -78,10 +77,18 @@ socket.on('message', function(message){
 document.onkeypress = kp;
 function kp(e){
     var charCode = (typeof e.which == "number") ? e.which : e.keyCode
-    if(charCode===13){
-    	e.preventDefault();
-    	e.stopPropagation();
-		send();
+    if( $(".pseudo").is(":visible") ){
+    	if(charCode===13){
+	    	e.preventDefault();
+	    	e.stopPropagation();
+			$("#pseudo-sub").click();
+		}	
+    } else {
+	    if(charCode===13){
+	    	e.preventDefault();
+	    	e.stopPropagation();
+			send();
+		}
 	}
 }
 function send() {
