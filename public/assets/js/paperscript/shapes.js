@@ -234,19 +234,47 @@ function right() {
 	socket.emit('move_right');
 }
 
+window.NavigationZQSDEnabled = true;
 function onKeyDown(event) {
 
-	if(event.key === "up" || event.key === "z"){
+	// up
+	if(event.key === "up"){
 		up();
 	}
-	if(event.key === "down" || event.key === "s"){
+	if(event.key === "z"){
+		if(window.NavigationZQSDEnabled){
+			up();
+		}
+	}
+
+	//down
+	if(event.key === "down"){
 		down();
 	}
-	if(event.key === "left" || event.key === "q"){
+	if(event.key === "s"){
+		if(window.NavigationZQSDEnabled){
+			down();
+		}
+	}
+
+	// left
+	if(event.key === "left"){
 		left();
 	}
-	if(event.key === "right" || event.key === "d"){
+	if(event.key === "q"){
+		if(window.NavigationZQSDEnabled){
+			left();
+		}
+	}
+
+	// right
+	if(event.key === "right"){
 		right();
+	}
+	if(event.key === "d"){
+		if(window.NavigationZQSDEnabled){
+			right();
+		}
 	}
 }
 
