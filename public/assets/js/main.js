@@ -1,11 +1,13 @@
+socket = io();
+
 $(document).ready(function(){
 
-var socket = io();
 
 $(document).on('click','#pseudo-sub', function(event) {
 	event.preventDefault();
 	var pseudo = $('#pseudo-content').val();
 	socket.emit("set_pseudo", pseudo);	
+	$('.pseudo').fadeOut(); 
 })
 
 
