@@ -68,10 +68,6 @@ $(document).on('click','#pseudo-sub', function(event) {
 
 
 
-socket.on('message', function(message){
-	document.getElementById('messages-inner').innerHTML = document.getElementById('messages-inner').innerHTML + "<p><span>" + message.user.pseudo + ":</span>" + message.message +'</p>';
-	$('#messages').scrollTop($('#messages-inner').height());
-});
 
 // enter sends messages
 document.onkeypress = kp;
@@ -95,12 +91,19 @@ function send() {
 	socket.emit("message", document.getElementById("message").value);
 	document.getElementById("message").value = "";
 	window.NavigationZQSDEnabled = true;
+	$('#message').trigger('change');
 }
 
 	// ZQSD nav on/off when writing message
 	document.getElementById('message').addEventListener('keydown', function (e){
 	    window.NavigationZQSDEnabled = false;
+	    socket.emit("writing","");
 	}, false);
+
+	$(document).on('change','#message',function() {
+		socket.emit("notwriting","");
+	})
+
 	$('canvas').on('click', function(){
 		window.NavigationZQSDEnabled = true;
 	})

@@ -79,6 +79,16 @@ io.sockets.on('connection', function (socket) {
             }); 
     });
 
+    socket.on('writing', function(x) {
+       socket.broadcast.emit('speaking',user);
+       console.log('writing');
+    });
+
+    socket.on('notwriting', function(x) {
+       socket.broadcast.emit('notspeaking',user);
+       console.log('notwriting');
+    });
+
     socket.on('disconnect', function(x) {
         if(typeof user !== "undefined"){
             try{

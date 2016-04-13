@@ -352,6 +352,34 @@ socket.on('users', function(users){
 	refresh();
 });
 
+socket.on('speaking', function(u){
+	var userToUpdate = u;
+	for (var i = 0; i < balls.length; i++) {
+		if(balls[i].socketId === userToUpdate.socketId){
+			var raster = new Raster('http://iconshow.me/media/images/ui/ios7-icons/png/512/chatbubble-working.png');
+			raster.position = view.center;
+			raster.scale(0.04);
+			console.log('writing');
+			break;
+		}
+	}	
+});
+
+socket.on('notspeaking', function(u){
+	var userToUpdate = u;
+	for (var i = 0; i < balls.length; i++) {
+		if(balls[i].socketId === userToUpdate.socketId){
+			console.log('writing');
+			break;
+		}
+	}	
+});
+
+socket.on('message', function(message){
+	document.getElementById('messages-inner').innerHTML = document.getElementById('messages-inner').innerHTML + "<p><span>" + message.user.pseudo + ":</span>" + message.message +'</p>';
+	$('#messages').scrollTop($('#messages-inner').height());
+
+});
 /** Mise à jour d'un utilisateur **/
 socket.on('update', function(u){ 
 
@@ -381,7 +409,6 @@ socket.on('update', function(u){
 
 /** Suppression **/
 socket.on('remove', function(user){
-
 	for (var i = 0; i < balls.length; i++) {
 		if(balls[i].socketId === user.socketId){
 			try {
