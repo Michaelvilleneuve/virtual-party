@@ -3,8 +3,8 @@ mainColor = $('.blue').css('color');
 grid = new Group();
 grid.sendToBack();
 
-var largeur = 20000;
-var hauteur = 20000;
+var largeur = 2000;
+var hauteur = 2000;
 var nblignes = 350;
 var nbcolonnes = 350;
 
