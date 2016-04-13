@@ -1,3 +1,5 @@
+mainColor = $('.blue').css('color');
+
 grid = new Group();
 grid.sendToBack();
 
@@ -10,7 +12,11 @@ for (var i = 0; i < nblignes; i++) {
 	var from = new Point(-largeur/2,i*nblignes/10-10000);
 	var to = new Point(largeur,i*nblignes/10-10000);
 	var path = new Path.Line(from, to);
-	path.strokeColor = "#E6E6E6";
+	path.fillColor = "#ffffff";
+	path.strokeColor = "#eeeeee";
+	path.blendMode = "normal";
+	path.strokeWidth = 1;
+	path.sendToBack();
 	grid.addChild(path);
 }
 
@@ -18,12 +24,13 @@ for (var i = 0; i < nbcolonnes; i++) {
 	var from = new Point(i*nbcolonnes/10-10000,-hauteur/2);
 	var to = new Point(i*nbcolonnes/10-10000,hauteur);
 	var path = new Path.Line(from, to);
-	path.strokeColor = "#E6E6E6";
+	path.fillColor = "#ffffff";
+	path.strokeColor = "#eeeeee";
+	path.blendMode = "normal";
+	path.strokeWidth = 1;
+	path.sendToBack();
 	grid.addChild(path);
 }
-
-ballsGroup = new Group();
-ballsGroup.bringToFront();
 
 function Ball(i, r, p, v, pseudo) {
 	this.socketId = i;
@@ -36,12 +43,11 @@ function Ball(i, r, p, v, pseudo) {
 	this.boundOffsetBuff = [];
 	this.sidePoints = [];
 	this.path = new Path({
-		fillColor: {
-			hue: 0,
-			saturation: 0,
-			brightness: 0.47
-		},
-		blendMode: 'lighter'
+		closed: true,
+		fillColor: "#ffffff",
+		strokeColor: mainColor,
+		strokeWidth: 2,
+		blendMode: 'darker'
 	});
 	this.textPosition = new Point(this.point.x + 15, this.point.y - 20);
 	this.text = new PointText({
@@ -297,9 +303,8 @@ function createYourBall(user){
 	var datas = definePos(user);
 
 	yourball = new Ball(datas.id, datas.radius, datas.position, datas.vector, user.pseudo);
-	ballsGroup.addChild(yourball.path);
 
-	yourball.path.fillColor = "#09438B";
+	yourball.path.fillColor = mainColor;;
 	yourball.p = new Point(view.size/2, view.size/2);
 }
 
@@ -312,7 +317,6 @@ function createBall(user){
 
 	if(datas.pseudoDefined || balls.length === 0){
 		balls.push(new Ball(datas.id, datas.radius, datas.position, datas.vector, user.pseudo));
-		ballsGroup.addChild(new Ball(datas.id, datas.radius, datas.position, datas.vector, user.pseudo).path);
 	}
 }
 
@@ -335,7 +339,7 @@ function definePos(user) {
 }
 
 function refresh() {
-	document.getElementById('infos').innerHTML = balls.length+1 + ' utilisateur(s) en ligne';
+	document.getElementById('infos').innerHTML = balls.length+1 + ' utilisateur(s) en ligne<div class="round"></div>';
 }
 
 /** Réception des utilisateurs **/
