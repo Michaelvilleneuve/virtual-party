@@ -2,8 +2,8 @@ var socket = io();
 var pseudo = prompt("Pseudo?");
 socket.emit("set_pseudo", pseudo);
 socket.on('message', function(message){
-	document.getElementById('messages').innerHTML = document.getElementById('messages').innerHTML + "<p><span>" + message.user.pseudo + ":</span>" + message.message +'</p>';
-	$('#messages').scrollTop($('#messages').height());
+	document.getElementById('messages-inner').innerHTML = document.getElementById('messages-inner').innerHTML + "<p><span>" + message.user.pseudo + ":</span>" + message.message +'</p>';
+	$('#messages').scrollTop($('#messages-inner').height());
 });
 
 document.onkeypress = kp;
